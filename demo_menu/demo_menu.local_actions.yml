@@ -1,0 +1,5 @@
+demo_menu.add:
+  route_name: demo_menu.one
+  title: 'Add One'
+  appears_on:
+    - demo_menu.two

@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Demonstrates the possibilities of forms in Drupal 8.
+ */
+
+/**
+ * Implements hook_form_alter()
+ */
+function demo_form_form_alter(&$form, &$form_state, $form_id) {
+  drupal_set_message(t('Found a form with ID %form_id', array('%form_id' => $form_id)));
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Only alters the Search form 'search_block_form'.
+ */
+function demo_form_form_search_block_form_alter(&$form, &$form_state, $form_id) {
+  $form['hello'] = array(
+    '#markup' => t('Go ahead, try me ...') . '<br />',
+    '#weight' => -1,
+  );
+}

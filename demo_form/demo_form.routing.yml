@@ -1,0 +1,15 @@
+demo_form.info:
+  path: '/demo/form'
+  defaults:
+    _title: 'Routing'
+    _content: '\Drupal\demo_form\Controller\DemoFormController::infoPage'
+  requirements:
+    _permission: 'access content'
+
+demo_form.basic_form:
+  path: '/demo/form/basic'
+  defaults:
+    _title: 'Basic form'
+    _form: '\Drupal\demo_form\Forms\BasicForm'
+  requirements:
+    _permission: 'access content'

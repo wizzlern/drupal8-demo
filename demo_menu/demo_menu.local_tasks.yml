@@ -1,0 +1,9 @@
+demo_menu.info:
+  title: 'Overview'
+  route_name: demo_menu.info
+  base_route: demo_menu.info
+
+demo_menu.one:
+  title: 'One'
+  route_name: demo_menu.one
+  base_route: demo_menu.info

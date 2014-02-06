@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Used to demonstrate the possibilities of menu API in Drupal 8.
+ */
+
+/**
+ * Implements hook_menu_link_defaults().
+ */
+function demo_menu_menu_link_defaults() {
+  $links['info'] = array(
+    'link_title' => 'Menu',
+    'route_name' => 'demo_menu.info',
+    'menu_name' => 'main',
+  );
+
+  return $links;
+}

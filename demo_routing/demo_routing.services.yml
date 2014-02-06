@@ -1,0 +1,6 @@
+# Defines an event listner which can alters routes.
+services:
+  demo_routing.route_subscriber:
+    class: Drupal\demo_routing\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

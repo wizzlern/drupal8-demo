@@ -1,0 +1,28 @@
+# Static routes
+demo_routing.info:
+  path: '/demo/routing'
+  defaults:
+    _content: '\Drupal\demo_routing\Controller\DemoRoutingController::infoPage'
+    _title: 'Routing'
+  requirements:
+    _permission: 'access content'
+
+demo_routing.hello:
+  path: '/demo/routing/hello/{name}'
+  defaults:
+    _content: '\Drupal\demo_routing\Controller\DemoRoutingController::helloYouPage'
+    _title: 'Hello'
+  requirements:
+    _permission: 'access content'
+
+demo_routing.user:
+  path: '/demo/routing/user/{user}'
+  defaults:
+    _content: '\Drupal\demo_routing\Controller\DemoRoutingController::helloUserPage'
+    _title: 'Hello user'
+  requirements:
+    _permission: 'access content'
+
+# Dynamic routes
+route_callbacks:
+  - '\Drupal\demo_routing\Routing\DemoRoutes::routes'
