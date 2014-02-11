@@ -1,0 +1,5 @@
+services:
+  # Defines a custom service. This service has no depencencies and needs
+  # no paramters to instantiate it.
+  fibonacci:
+    class: Drupal\service_demo\Fibonacci

@@ -1,0 +1,24 @@
+service_demo.info:
+  path: '/demo/service'
+  defaults:
+    _title: 'Service'
+    _content: '\Drupal\service_demo\Controller\ServiceDemoController::infoPage'
+  requirements:
+    _permission: 'access content'
+
+service_demo.language:
+  path: '/demo/service/language'
+  defaults:
+    _title: 'Current language'
+    _content: '\Drupal\service_demo\Controller\ServiceDemoController::languagePage'
+  requirements:
+    _permission: 'access content'
+
+service_demo.calculate_form:
+  path: '/demo/service/calculate'
+  defaults:
+    _title: 'Fibonacci calculations'
+    _form: '\Drupal\service_demo\Forms\CalculateForm'
+  requirements:
+    _permission: 'access content'
+

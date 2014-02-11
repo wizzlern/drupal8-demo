@@ -1,0 +1,8 @@
+name: Demo Service
+type: module
+description: 'Demonstrates Services in Drupal 8.'
+package: Demo
+version: 8.x-1.x
+core: 8.x
+dependencies:
+  - language
