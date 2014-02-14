@@ -1,0 +1,7 @@
+services:
+  # Define a service and mark it as an event subscriber.
+  demo_event_subscriber:
+    class: Drupal\demo_event\EventSubscriber\DemoEventSubscriber
+    arguments: [ '@state' ]
+    tags:
+      - { name: event_subscriber }

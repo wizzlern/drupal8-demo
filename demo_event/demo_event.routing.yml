@@ -1,0 +1,23 @@
+demo_event.info:
+  path: '/demo/event'
+  defaults:
+    _content: '\Drupal\demo_event\Controller\DemoEventController::infoPage'
+    _title: 'Events'
+  requirements:
+    _permission: 'access content'
+
+demo_event.event:
+  path: '/demo/event/event'
+  defaults:
+    _content: '\Drupal\demo_event\Controller\DemoEventController::infoPage'
+    _title: 'Fire an event'
+  requirements:
+    _permission: 'access content'
+
+demo_event.broadcast:
+  path: '/demo/event/broadcast'
+  defaults:
+    _form: '\Drupal\demo_event\Forms\EventForm'
+    _title: 'Broadcast a message'
+  requirements:
+    _permission: 'access content'

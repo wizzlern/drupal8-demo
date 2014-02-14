@@ -1,0 +1,6 @@
+name: Demo Event
+type: module
+description: 'Demonstrates the possibility of Symfony Events in Drupal.'
+package: Demo
+version: 8.x-1.x
+core: 8.x

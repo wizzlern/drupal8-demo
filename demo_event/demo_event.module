@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * @file
+ * Used to demonstrate Symfony Events, Event listeners and Event dispatchers.
+ */
+
+function test() {
+  print_r(settings()->getAll());
+}
