@@ -26,7 +26,7 @@ class BasicForm extends FormBase {
   public function buildForm(array $form, array &$form_state) {
     $form['phone_number'] = array(
       '#type' => 'tel',
-      '#title' => $this->t('Your phone number')
+      '#title' => $this->t('Your phone number'),
     );
     $form['actions']['#type'] = 'actions';
     $form['actions']['submit'] = array(
