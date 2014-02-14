@@ -1,0 +1,31 @@
+demo_variable.info:
+  path: '/demo/variable'
+  defaults:
+    _content: '\Drupal\demo_variable\Controller\DemoVariableController::infoPage'
+    _title: 'Variables'
+  requirements:
+    _permission: 'access content'
+
+demo_variable.setting:
+  path: '/demo/variable/setting'
+  defaults:
+    _content: '\Drupal\demo_variable\Controller\DemoVariableController::settingsPage'
+    _title: 'Settings'
+  requirements:
+    _permission: 'access content'
+
+demo_variable.state:
+  path: '/demo/variable/state'
+  defaults:
+    _content: '\Drupal\demo_variable\Controller\DemoVariableController::statePage'
+    _title: 'Settings'
+  requirements:
+    _permission: 'access content'
+
+demo_variable.config:
+  path: '/demo/variable/config'
+  defaults:
+    _form: '\Drupal\demo_variable\Forms\SettingsForm'
+    _title: 'Key/Value states'
+  requirements:
+    _permission: 'access content'

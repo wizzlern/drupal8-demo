@@ -1,0 +1,6 @@
+name: Demo Variables
+type: module
+description: 'Demonstrates the three variable systems in Drupal 8.'
+package: Demo
+version: 8.x-1.x
+core: 8.x
