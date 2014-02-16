@@ -10,6 +10,6 @@ demo_form.basic_form:
   path: '/demo/form/basic'
   defaults:
     _title: 'Basic form'
-    _form: '\Drupal\demo_form\Forms\BasicForm'
+    _form: '\Drupal\demo_form\Form\BasicForm'
   requirements:
     _permission: 'access content'

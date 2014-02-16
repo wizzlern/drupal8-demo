@@ -25,7 +25,7 @@ demo_variable.state:
 demo_variable.config:
   path: '/demo/variable/config'
   defaults:
-    _form: '\Drupal\demo_variable\Forms\SettingsForm'
+    _form: '\Drupal\demo_variable\Form\SettingsForm'
     _title: 'Demo settings'
   requirements:
     _permission: 'access content'

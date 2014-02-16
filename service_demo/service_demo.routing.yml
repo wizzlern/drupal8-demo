@@ -18,7 +18,7 @@ service_demo.calculate_form:
   path: '/demo/service/calculate'
   defaults:
     _title: 'Fibonacci calculations'
-    _form: '\Drupal\service_demo\Forms\CalculateForm'
+    _form: '\Drupal\service_demo\Form\CalculateForm'
   requirements:
     _permission: 'access content'
 

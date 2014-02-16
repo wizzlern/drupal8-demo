@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\demo_event\Forms\EventForm.
+ * Contains \Drupal\demo_event\Form\EventForm.
  */
 
-namespace Drupal\demo_event\Forms;
+namespace Drupal\demo_event\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\demo_event\DemoEvents;

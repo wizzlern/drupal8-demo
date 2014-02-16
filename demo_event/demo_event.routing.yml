@@ -17,7 +17,7 @@ demo_event.event:
 demo_event.broadcast:
   path: '/demo/event/broadcast'
   defaults:
-    _form: '\Drupal\demo_event\Forms\EventForm'
+    _form: '\Drupal\demo_event\Form\EventForm'
     _title: 'Broadcast a message'
   requirements:
     _permission: 'access content'

@@ -22,7 +22,7 @@ final class DemoEvents {
   /**
    * Name of event fired when a user broadcasts a message.
    *
-   * @see \Drupal\demo_event\Forms\EventForm::submitForm()
+   * @see \Drupal\demo_event\Form\EventForm::submitForm()
    */
   const BRAODCAST = 'demo_event.broadcast';
 

@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\demo_variable\Forms\SettingsForm.
+ * Contains \Drupal\demo_variable\Form\SettingsForm.
  */
 
-namespace Drupal\demo_variable\Forms;
+namespace Drupal\demo_variable\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 

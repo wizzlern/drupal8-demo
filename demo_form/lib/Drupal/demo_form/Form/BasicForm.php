@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\demo_form\Forms\BasicForm.
+ * Contains \Drupal\demo_form\Form\BasicForm.
  */
 
-namespace Drupal\demo_form\Forms;
+namespace Drupal\demo_form\Form;
 
 use Drupal\Core\Form\FormBase;
 

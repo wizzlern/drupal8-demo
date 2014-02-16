@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\service_demo\Forms\CalculateForm.
+ * Contains \Drupal\service_demo\Form\CalculateForm.
  */
 
-namespace Drupal\service_demo\Forms;
+namespace Drupal\service_demo\Form;
 
 use Drupal\Core\Form\FormBase;
 
