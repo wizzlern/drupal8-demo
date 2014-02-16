@@ -1,0 +1,12 @@
+# Schema for configuration files of the Demo Variable settings.
+
+demo_variable.settings:
+  type: mapping
+  label: 'Demo settings'
+  mapping:
+    name:
+      type: string
+      label: 'Name'
+    skills:
+      type: string
+      label: 'Drupal skills'
