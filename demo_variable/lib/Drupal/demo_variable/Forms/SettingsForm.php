@@ -33,20 +33,6 @@ class SettingsForm extends ConfigFormBase {
       '#required' => TRUE,
     );
     $options = array(
-      '5' => 'Drupal 5',
-      '6' => 'Drupal 6',
-      '7' => 'Drupal 7',
-      '8' => 'Drupal 8',
-    );
-    $form['versions'] = array(
-      '#type' => 'checkboxes',
-      '#title' => $this->t('Drupal versions'),
-      '#description' => $this->t('The drupal versions you have used.'),
-      '#options' => $options,
-      '#default_value' => $config->get('drupal.versions') ? $config->get('drupal.versions') : array(),
-      '#required' => TRUE,
-    );
-    $options = array(
       'build' => $this->t('Building with modules'),
       'develop' => $this->t('Development'),
       'theme' => $this->t('Theming'),
@@ -55,7 +41,7 @@ class SettingsForm extends ConfigFormBase {
     $form['skills'] = array(
       '#type' => 'checkboxes',
       '#title' => $this->t('Drupal skills'),
-      '#description' => $this->t('The drupal skills you have.'),
+      '#description' => $this->t('Your drupal skills.'),
       '#options' => $options,
       '#default_value' => $config->get('drupal.skills') ? $config->get('drupal.skills') : array(),
     );
