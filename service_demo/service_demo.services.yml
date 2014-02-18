@@ -1,5 +1,5 @@
 services:
-  # Defines a custom service. This service has no depencencies and needs
-  # no paramters to instantiate it.
+  # Defines a custom service. This service has no depencencies and therefore
+  # needs no parameters to instantiate it.
   fibonacci:
     class: Drupal\service_demo\Fibonacci
