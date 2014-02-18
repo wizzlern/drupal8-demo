@@ -7,7 +7,6 @@
 
 namespace Drupal\demo_event\EventSubscriber;
 
-use Drupal\Core\KeyValueStore\StateInterface;
 use Drupal\demo_event\DemoEvents;
 use Drupal\demo_event\DemoMessageEvent;
 use Symfony\Component\EventDispatcher\Event;
