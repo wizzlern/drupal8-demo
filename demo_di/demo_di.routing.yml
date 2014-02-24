@@ -1,0 +1,15 @@
+demo_di.info:
+  path: '/demo/dependency-injection'
+  defaults:
+    _title: 'Dependency Injection'
+    _content: '\Drupal\demo_di\Controller\DemoDIController::infoPage'
+  requirements:
+    _permission: 'access content'
+
+demo_di.dependent_form:
+  path: '/demo/dependency-injection/user'
+  defaults:
+    _title: 'User info'
+    _form: '\Drupal\demo_di\Form\DependentForm'
+  requirements:
+    _permission: 'access content'

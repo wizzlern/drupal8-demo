@@ -1,0 +1,6 @@
+name: Demo Dependency Injection
+type: module
+description: 'Demonstrates Dependency Injection in Drupal 8.'
+package: Demo
+version: 8.x-1.x
+core: 8.x
