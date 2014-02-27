@@ -1,0 +1,23 @@
+demo_config_entity.info:
+  path: '/demo/demo_config_entity'
+  defaults:
+    _content: '\Drupal\demo_config_entity\Controller\DemoConfigEntityController::infoPage'
+    _title: 'Configuration Entities'
+  requirements:
+    _permission: 'access content'
+
+demo_config_entity.add:
+  path: '/demo/demo_config_entity/add'
+  defaults:
+    _form: '\Drupal\demo_config_entity\Form\AddWebserviceForm'
+    _title: 'Configuration Entity'
+  requirements:
+    _permission: 'access content'
+
+demo_config_entity.list:
+  path: '/demo/demo_config_entity/list'
+  defaults:
+    _content: '\Drupal\demo_config_entity\Controller\DemoConfigEntityController::list'
+    _title: 'Configuration Entity'
+  requirements:
+    _permission: 'access content'
