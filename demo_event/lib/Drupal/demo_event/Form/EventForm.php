@@ -57,7 +57,7 @@ class EventForm extends FormBase {
     // The listener that is subscribed will create a response message.
     // @todo The event dispatcher should be injected as a dependency.
     $dispatcher = \Drupal::service('event_dispatcher');
-    $dispatcher->dispatch(DemoEvents::BRAODCAST, new DemoMessageEvent($message));
+    $dispatcher->dispatch(DemoEvents::BROADCAST, new DemoMessageEvent($message));
 
     drupal_set_message($this->t('Your message was broadcasted. You should see the result immediately.'));
   }
