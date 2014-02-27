@@ -24,6 +24,6 @@ final class DemoEvents {
    *
    * @see \Drupal\demo_event\Form\EventForm::submitForm()
    */
-  const BRAODCAST = 'demo_event.broadcast';
+  const BROADCAST = 'demo_event.broadcast';
 
 }
