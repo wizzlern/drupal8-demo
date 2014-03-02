@@ -1,0 +1,175 @@
+<?php
+
+/**
+ * @file
+ * Install and update scripts to demonstrate node data handling in Drupal 8.
+ */
+
+use Drupal\node\Entity\Node;
+
+/**
+ * Implements hook_install().
+ */
+function demo_node_install() {
+  // Create content with related users and taxonomy terms.
+  $users = demo_node_create_users();
+  $terms = demo_node_create_terms();
+  $nodes = demo_node_create_content($users, $terms);
+}
+
+function demo_node_create_users() {
+  $uids = array();
+
+  // @todo If users already exist, just return their uid's.
+
+  $accounts = array(
+    array(
+      'name' => 'Herman Melvill',
+      'mail' => 'herman@example.com',
+      'pass' => 'Herman',
+      'status' => 1,
+    ),
+    array(
+      'name' => 'Jack London',
+      'mail' => 'jack@example.com',
+      'pass' => 'Jack',
+      'status' => 1,
+    ),
+    array(
+      'name' => 'Jules Verne',
+      'mail' => 'jules@example.com',
+      'pass' => 'Jules',
+      'status' => 1,
+    ),
+  );
+
+  foreach($accounts as $account) {
+    $user = entity_create('user', $account);
+    $user->save();
+    $uids[] = $user->id();
+  }
+
+  return $uids;
+}
+
+function demo_node_create_terms() {
+  $tids = array();
+
+  // @todo Add requirement check that Terms vocabulary exists.
+  if ($vocabulary = entity_load('taxonomy_vocabulary', 'tags')) {
+    $vid = $vocabulary->id();
+
+    $terms = array(
+      array(
+        'name' => 'Fogg',
+        'description' => 'A thick cloud of tiny water droplets suspended in the atmosphere at or near the earth\'s surface which obscures or restricts visibility (to a greater extent than mist; strictly, reducing visibility to below 1 km).',
+        'vid' => $vid,
+      ),
+      array(
+        'name' => 'Macao',
+        'description' => 'Also spelled Macao, is one of the two Special Administrative Regions of the People\'s Republic of China, the other being Hong Kong',
+        'vid' => $vid,
+      ),
+      array(
+        'name' => 'Sailor',
+        'description' => 'A person whose job it is to work as a member of the crew of a commercial or naval ship or boat, especially one who is below the rank of officer.',
+        'vid' => $vid,
+      ),
+      array(
+        'name' => 'Boat',
+        'description' => 'A small vessel for travelling over water, propelled by oars, sails, or an engine.',
+        'vid' => $vid,
+      ),
+      array(
+        'name' => 'Harbour',
+        'description' => 'A place on the coast where ships may moor in shelter, especially one protected from rough water by piers, jetties, and other artificial structures.',
+        'vid' => $vid,
+      ),
+      array(
+        'name' => 'Knots',
+        'description' => 'A unit of speed equivalent to one nautical mile per hour, used especially of ships, aircraft, or winds.',
+        'vid' => $vid,
+      ),
+      array(
+        'name' => 'Voyage',
+        'description' => 'A long journey involving travel by sea or in space: his voyage to America',
+        'vid' => $vid,
+      ),
+      array(
+        'name' => 'Yokohama',
+        'description' => 'Yokohama is the capital city of Kanagawa Prefecture and the second largest city in Japan by population after Tokyo and most populous municipality of Japan. It lies on Tokyo Bay, south of Tokyo, in the Kantō region of the main island of Honshu. It is a major commercial hub of the Greater Tokyo Area.',
+        'vid' => $vid,
+      ),
+    );
+
+    // Create and save the taxonomy terms.
+    foreach($terms as $term) {
+      $taxonomy_term = entity_create('taxonomy_term', $term);
+      $taxonomy_term->save();
+
+      $tids[] = $taxonomy_term->id();
+    }
+  }
+
+  return $tids;
+}
+
+function demo_node_create_content($users, $terms) {
+  $nids = array();
+
+  // @todo Add requirement check that Article type exists.
+  // @todo What to do instead of <p>?
+  if (entity_load('node_type', 'article')) {
+    $articles = array(
+      array(
+        'title' => 'A certain superstitiousness',
+        'body' => array(
+          'value' => '<p>With memories like these in him, and, moreover, given to a certain superstitiousness, as has been said; the courage of this Starbuck which could, nevertheless, still flourish, must indeed have been extreme.</p><p>But it was not in reasonable nature that a man so organized, and with such terrible experiences and remembrances as he had; it was not in nature that these things should fail in latently engendering an element in him, which, under suitable circumstances, would break out from its confinement, and burn all his courage up. And brave as he might be, it was that sort of bravery chiefly, visible in some intrepid men, which, while generally abiding firm in the conflict with seas, or winds, or whales, or any of the ordinary irrational horrors of the world, yet cannot withstand those more terrific, because more spiritual terrors, which sometimes menace you from the concentrating brow of an enraged and mighty man.</p>',
+          'format' => 'full_html',
+        ),
+        'uid' => array_rand($users),
+        'field_tags' => array_rand($terms, rand(1, 3)),
+        'type' => 'article',
+      ),
+      array(
+        'title' => 'The thing most sorrowful',
+        'body' => array(
+          'value' => '<p>But were the coming narrative to reveal in any instance, the complete abasement of poor Starbuck\'s fortitude, scarce might I have the heart to write it; for it is a thing most sorrowful, nay shocking, to expose the fall of valour in the soul.</p><p>Men may seem detestable as joint stock-companies and nations; knaves, fools, and murderers there may be; men may have mean and meagre faces; but man, in the ideal, is so noble and so sparkling, such a grand and glowing creature, that over any ignominious blemish in him all his fellows should run to throw their costliest robes. That immaculate manliness we feel within ourselves, so far within us, that it remains intact though all the outer character seem gone; bleeds with keenest anguish at the undraped spectacle of a valor-ruined man. Nor can piety itself, at such a shameful sight, completely stifle her upbraidings against the permitting stars.</p>',
+          'format' => 'full_html',
+        ),
+        'uid' => array_rand($users),
+        'field_tags' => array_rand($terms, rand(1, 3)),
+        'type' => 'article',
+      ),
+      array(
+        'title' => 'Thou great democratic God',
+        'body' => array(
+          'value' => '<p>If, then, to meanest mariners, and renegades and castaways, I shall hereafter ascribe high qualities, though dark; weave round them tragic graces; if even the most mournful, perchance the most abased, among them all, shall at times lift himself to the exalted mounts; if I shall touch that workman\'s arm with some ethereal light; if I shall spread a rainbow over his disastrous set of sun; then against all mortal critics bear me out in it, thou Just Spirit of Equality, which hast spread one royal mantle of humanity over all my kind! Bear me out in it, thou great democratic God! who didst not refuse to the swart convict, Bunyan, the pale, poetic pearl; Thou who didst clothe with doubly hammered leaves of finest gold, the stumped and paupered arm of old Cervantes; Thou who didst pick up Andrew Jackson from the pebbles; who didst hurl him upon a war-horse; who didst thunder him higher than a throne! Thou who, in all Thy mighty, earthly marchings, ever cullest Thy selectest champions from the kingly commons; bear me out in it, O God!</p>',
+          'format' => 'full_html',
+        ),
+        'uid' => array_rand($users),
+        'field_tags' => array_rand($terms, rand(1, 3)),
+        'type' => 'article',
+      ),
+      array(
+        'title' => 'Cape Cod',
+        'body' => array(
+          'value' => '<p>Stubb was the second mate. He was a native of Cape Cod; and hence, according to local usage, was called a Cape-Cod-man. A happy-go-lucky; neither craven nor valiant; taking perils as they came with an indifferent air; and while engaged in the most imminent crisis of the chase, toiling away, calm and collected as a journeyman joiner engaged for the year. Good-humored, easy, and careless, he presided over his whale-boat as if the most deadly encounter were but a dinner, and his crew all invited guests. He was as particular about the comfortable arrangement of his part of the boat, as an old stage-driver is about the snugness of his box. When close to the whale, in the very death-lock of the fight, he handled his unpitying lance coolly and off-handedly, as a whistling tinker his hammer. He would hum over his old rigadig tunes while flank and flank with the most exasperated monster. Long usage had, for this Stubb, converted the jaws of death into an easy chair. What he thought of death itself, there is no telling. Whether he ever thought of it at all, might be a question; but, if he ever did chance to cast his mind that way after a comfortable dinner, no doubt, like a good sailor, he took it to be a sort of call of the watch to tumble aloft, and bestir themselves there, about something which he would find out when he obeyed the order, and not sooner.</p>',
+          'format' => 'full_html',
+        ),
+        'uid' => array_rand($users),
+        'field_tags' => array_rand($terms, rand(1, 3)),
+        'type' => 'article',
+      ),
+    );
+
+    // Create and save the article nodes.
+    foreach($articles as $article) {
+      $node = entity_create('node', $article);
+      $node->save();
+      $nids[] = $node->id();
+    }
+  }
+
+  return $nids;
+}

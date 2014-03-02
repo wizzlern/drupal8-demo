@@ -1,0 +1,180 @@
+<?php
+
+/**
+ * @file
+ * Contains \Drupal\demo_node\Controller\NodeContent.
+ */
+
+namespace Drupal\demo_node\Controller;
+
+use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Entity\EntityManagerInterface;
+use Drupal\Core\Entity\Query\QueryFactory;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+
+class NodeContent extends ControllerBase {
+
+  /**
+   * The webservice storage controller.
+   *
+   * @var \Drupal\Core\Entity\EntityManagerInterface
+   */
+  protected $entityManager;
+
+  /**
+   * The entity query factory.
+   *
+   * @var \Drupal\Core\Entity\Query\QueryFactory.
+   */
+  protected $entityQuery;
+
+  /**
+   * Constructs the controller using dependency injection.
+   *
+   * @param \Drupal\Core\Entity\EntityStorageControllerInterface $storage_controller
+   *   The entity storage controller.
+   * @param \Drupal\Core\Entity\Query\QueryFactory $query_factory
+   *   The query factory.
+   */
+  public function __construct(EntityManagerInterface $entity_manager, QueryFactory $entity_query) {
+    $this->entityManager = $entity_manager;
+    $this->entityQuery = $entity_query;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+    // We only care about the Webservice enities in this form, therefore
+    // we directly use and store the right storage controller.
+      $container->get('entity.manager'),
+      $container->get('entity.query')
+    );
+  }
+
+  /**
+   * Displays individual fields of one node content and a the teaser.
+   *
+   * @return array
+   *   Render Array of page content.
+   */
+  public function oneNode() {
+    // Get all nodes and get the data of a random one.;
+    $nodes = $this->entityManager->getStorageController('node')->loadMultiple();
+    /** @var \Drupal\node\Entity\Node $node */
+    $node = $this->entityManager->getStorageController('node')->load(array_rand($nodes));
+
+    $output['info'] = array(
+      '#markup' => $this->t('This page contains various pieces of content of a random article.'),
+    );
+
+    $output['fields'] = array(
+      '#type' => 'fieldset',
+      '#title' => $this->t('Individual node fields'),
+      '#collapsible' => FALSE,
+    );
+    /** @var \Drupal\taxonomy\Plugin\Field\FieldType\TaxonomyTermReferenceItem $term */
+//    $term = $node->field_tags[0];
+//    dpm(get_class($term = $node->field_tags[0]));
+//    dpm($term->getPossibleValues()); // The possible values in the form; term id's
+//    dpm($term->getPossibleOptions()); // The possible human readable values in the form; term names
+    /** @var \Drupal\Core\TypedData\Plugin\DataType\Integer $value */
+//    dpm($value = $term->get('target_id'));
+//    dpm($value->getValue());
+//    dpm($term->entity->tid->value);
+//    dpm($term->target_id);
+
+    $output['fields']['base_fields'] = array(
+      '#theme' => 'item_list',
+      '#title' => 'Base fields',
+      '#items' => array(
+        format_string('Node ID: !value', array('!value' => $node->id())),
+        format_string('Node type: !value', array('!value' => $node->getType())),
+        format_string('Node title: !value', array('!value' => $node->getTitle())),
+        format_string('Node author ID: !value', array('!value' => $node->getOwnerId())),
+        format_string('Node author name: !value', array('!value' => $node->getOwner()->getUsername())),
+        format_string('First term ID: !value', array('!value' => $node->field_tags[0]->target_id)),
+      ),
+      '#weight' => -2,
+    );
+
+    $output['fields']['configurable_fields'] = array(
+      '#theme' => 'item_list',
+      '#title' => 'Configurable fields',
+      '#items' => array(
+        format_string('First term name: !value', array('!value' => $node->field_tags[0]->entity->name->value)),
+        format_string('First term description: !value', array('!value' => $node->field_tags[0]->entity->description->value)),
+        format_string('Body text: !value', array('!value' => $node->body[0]->value)),
+      ),
+      '#weight' => -1,
+    );
+
+    // The node in teaser view.
+    $output['view'] = array(
+      '#type' => 'fieldset',
+      '#title' => $this->t('Node in teaser view'),
+      '#collapsible' => FALSE,
+    );
+    $output['view']['teaser'] = $this->entityManager->getViewBuilder('node')->view($node, 'teaser');
+
+    return $output;
+  }
+
+  /**
+   * Displays a selection of node.
+   *
+   * @return array
+   *   Render Array of page content.
+   */
+  public function nodeSelection() {
+    $nids = array();
+
+    // Select the nodes we want to show. i.e. 3 published articles.
+    $nids = $this->entityQuery->get('node')
+      ->condition('type', 'article')
+      ->condition('status', 1)
+      ->range(0, 3)
+      ->execute();
+    $nodes =  $this->entityManager->getStorageController('node')->loadMultiple($nids);
+
+    // Build a list of node teasers for output.
+    $output['selection'] = array(
+      '#theme' => 'item_list',
+    );
+    foreach ($nodes as $node) {
+      $output['selection']['#items'][] = $this->entityManager->getViewBuilder('node')->view($node, 'teaser');
+    }
+
+    return $output;
+  }
+
+  /**
+   * Displays a selection of node by taxonomy term name.
+   *
+   * @return array
+   *   Render Array of page content.
+   */
+  public function nodesByTermName() {
+
+    // Select the nodes referencing a term with the name 'Boat'.
+    $nids = $this->entityQuery->get('node')
+      ->condition('type', 'article')
+      ->condition('status', 1)
+      ->condition('field_tags.entity.name', 'Boat')
+      ->execute();
+    $nodes = $this->entityManager->getStorageController('node')->loadMultiple($nids);
+
+    // Build a list of node teasers for output.
+    $output['selection'] = array(
+      '#theme' => 'item_list',
+    );
+    foreach ($nodes as $node) {
+      $output['selection']['#items'][] = $this->entityManager->getViewBuilder('node')->view($node, 'teaser');
+    }
+
+    return $output;
+  }
+
+}
