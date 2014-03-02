@@ -10,7 +10,6 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Entity\EntityStorageControllerInterface;
 use Drupal\demo_config_entity\Entity\Webservice;
 use Drupal\Core\Entity\Query\QueryFactory;
-use Drupal\Core\Entity\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
@@ -132,8 +131,11 @@ class AddWebserviceForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, array &$form_state) {
+    // Instantiate and save a new Webservice config entity.
+    // The constructor needs an array of data, keyed by property name.
     $webservice = new Webservice($form_state['values'], 'demo_config_entity_webservice');
     $webservice->save();
+
     drupal_set_message($this->t('Webform @name was saved.', array('@name' => $form_state['values']['label'])));
   }
 
@@ -157,10 +159,7 @@ class AddWebserviceForm extends FormBase {
    * @return mixed
    */
   protected function getAllWebservices() {
-    // Query for all webservice entities.
-    // $this->entityQuery->get('demo_config_entity_webservice')->execute();
-
-    // Load all webservice entities.
     return $this->storageController->loadMultiple();
   }
+
 }
