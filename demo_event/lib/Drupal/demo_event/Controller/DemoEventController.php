@@ -47,7 +47,7 @@ class DemoEventController extends ControllerBase {
     // will be no response on the event.
     // @todo The event dispatcher should be added as a dependency.
     $dispatcher = \Drupal::service('event_dispatcher');
-    $dispatcher->dispatch(DemoEvents.NO_REPLY);
+    $dispatcher->dispatch(DemoEvents::NO_REPLY);
 
     $output = 'This page fires a "demo_event.no-reply" event. But nobody listens :(';
     return $output;
