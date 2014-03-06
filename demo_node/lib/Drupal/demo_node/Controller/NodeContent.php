@@ -77,36 +77,76 @@ class NodeContent extends ControllerBase {
     );
     /** @var \Drupal\taxonomy\Plugin\Field\FieldType\TaxonomyTermReferenceItem $term */
 //    $term = $node->field_tags[0];
-//    dpm(get_class($term = $node->field_tags[0]));
-//    dpm($term->getPossibleValues()); // The possible values in the form; term id's
-//    dpm($term->getPossibleOptions()); // The possible human readable values in the form; term names
+//    debug(get_class($term = $node->field_tags[0]));
+//    debug($term->getPossibleValues()); // The possible values in the form; term id's
+//    debug($term->getPossibleOptions()); // The possible human readable values in the form; term names
     /** @var \Drupal\Core\TypedData\Plugin\DataType\Integer $value */
-//    dpm($value = $term->get('target_id'));
-//    dpm($value->getValue());
-//    dpm($term->entity->tid->value);
+//    debug($value = $term->get('target_id'));
+//    debug($value->getValue());
+//    debug($term->entity->tid->value);
 //    dpm($term->target_id);
+//    debug(array_keys($this->entityManager->getFieldDefinitions('node', 'article')));
+//debug($node->title->value);
+//debug($node->type->value);
+//debug($node->status->value);
+//debug($node->changed->value);
+//debug($node->path->value);
+//    foreach ($node as $field) {
+//      debug(get_class($field));
+//    }
+//    foreach ($node as $field) {
+//      /** @var \Drupal\Core\Field\FieldItemList  $field*/
+//      if (strpos('field_', $field->getName())) {
+//        // ...
+//      }
+//    }
+//    /** @var \Drupal\field\Entity\FieldConfig */
+//    debug($node->body->getFieldDefinition()->getPropertyNames());
+//    debug($node->field_tags->getFieldDefinition()->getPropertyNames());
+//    array (
+//      0 => 'value',
+//      1 => 'format',
+//      2 => 'processed',
+//      3 => 'summary',
+//      4 => 'summary_processed',
+//    )
+//    /** @var \Drupal\Core\Field\ConfigFieldItemList $item_list */
+//    $item_list->getConstraints()
+//    /** @var \Drupal\field\Entity\FieldInstanceConfig $config */
+//    $config->getSettings()
+//    debug($node->field_item_list->getSettings()['allowed_values']);
+//    debug($node->field_item_list->getFieldDefinition()->getCardinality());
 
+
+
+    $base_fields = array_keys($this->entityManager->getBaseFieldDefinitions('node'));
     $output['fields']['base_fields'] = array(
       '#theme' => 'item_list',
       '#title' => 'Base fields',
       '#items' => array(
-        format_string('Node ID: !value', array('!value' => $node->id())),
-        format_string('Node type: !value', array('!value' => $node->getType())),
-        format_string('Node title: !value', array('!value' => $node->getTitle())),
-        format_string('Node author ID: !value', array('!value' => $node->getOwnerId())),
-        format_string('Node author name: !value', array('!value' => $node->getOwner()->getUsername())),
-        format_string('First term ID: !value', array('!value' => $node->field_tags[0]->target_id)),
+        format_string('All base fields: @value', array('@value' => implode(', ', $base_fields))),
+        format_string('Node ID: @value', array('@value' => $node->id())),
+        format_string('Node type: @value', array('@value' => $node->getType())),
+        format_string('Node title: @value', array('@value' => $node->getTitle())),
+        format_string('Node author ID: @value', array('@value' => $node->getOwnerId())),
+        format_string('Node author name: @value', array('@value' => $node->getOwner()->getUsername())),
+        //format_string('First term ID: @value', array('@value' => $node->field_tags[0]->target_id)),
+        format_string('First term ID: @value', array('@value' => $node->field_tags->target_id)),
       ),
       '#weight' => -2,
     );
 
+    $node_fields = array_keys($node->getFieldDefinitions());
+    $config_fields = array_diff($node_fields, $base_fields);
     $output['fields']['configurable_fields'] = array(
       '#theme' => 'item_list',
       '#title' => 'Configurable fields',
       '#items' => array(
-        format_string('First term name: !value', array('!value' => $node->field_tags[0]->entity->name->value)),
-        format_string('First term description: !value', array('!value' => $node->field_tags[0]->entity->description->value)),
-        format_string('Body text: !value', array('!value' => $node->body[0]->value)),
+        format_string('All configurable fields: @value', array('@value' => implode(', ', $config_fields))),
+        format_string('First term name: @value', array('@value' => $node->field_tags->entity->name->value)),
+        format_string('First term description: @value', array('@value' => $node->field_tags->entity->description->value)),
+        format_string('Body text: @value', array('@value' => $node->body->value)),
+        format_string('Body text format: @value', array('@value' => $node->body->format)),
       ),
       '#weight' => -1,
     );
