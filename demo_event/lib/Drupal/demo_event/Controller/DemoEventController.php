@@ -46,6 +46,7 @@ class DemoEventController extends ControllerBase {
     // Dispatch an demo event. But no listeners have been subscribed, so there
     // will be no response on the event.
     // @todo The event dispatcher should be added as a dependency.
+    /** @var \Symfony\Component\EventDispatcher\EventDispatcher $dispatcher */
     $dispatcher = \Drupal::service('event_dispatcher');
     $dispatcher->dispatch(DemoEvents::NO_REPLY);
 
