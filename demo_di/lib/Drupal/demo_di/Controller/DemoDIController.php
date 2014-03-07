@@ -25,7 +25,7 @@ class DemoDIController extends ControllerBase {
     $output['urls'] = array(
       '#theme' => 'item_list',
       '#items' => array(
-        $this->t('Show user information: !url.', array('!url' => l('/demo/dependency-injection/form', 'demo/dependency-injection/form'))),
+        $this->t('Show user information: !url.', array('!url' => l('/demo/dependency-injection/user', 'demo/dependency-injection/user'))),
       ),
     );
 
