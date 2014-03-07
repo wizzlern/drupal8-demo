@@ -21,7 +21,7 @@ class InfoController extends ControllerBase {
   public function infoPage() {
 
     $output['info'] = array(
-      '#markup' => $this->t('This demonstrates the capabilities of the Drupal 8 routing system. The following examples are available:'),
+      '#markup' => $this->t('This demonstrates the handling of node data in Drupal 8. The following examples are available:'),
     );
 
     $output['urls'] = array(
