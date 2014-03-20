@@ -1,0 +1,1 @@
+Field type plugins must be placed in this directory.

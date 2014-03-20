@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Demonstrates the possibilities of Plugins in Drupal 8.
+ */
+
+/**
+ * Implements hook_field_formatter_info_alter().
+ */
+function demo_plugin_field_formatter_info_alter(array &$info) {
+  // We override the taxonomy term field formatter with our own.
+  if (isset($info['taxonomy_term_reference_link'])) {
+    $info['taxonomy_term_reference_link']['class'] = 'Drupal\\demo_plugin\\Plugin\\Field\\FieldFormatter\\DemoPluginTermLinkFormatter';
+    $info['taxonomy_term_reference_link']['provider'] = 'demo_plugin';
+    $info['taxonomy_term_reference_link']['settings'] = array('limit' => '0');
+  }
+
+}
