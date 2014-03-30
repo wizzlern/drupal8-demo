@@ -11,6 +11,10 @@ use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Modifies the language manager service.
+ * 
+ * Note that this class is automatically recognized based on
+ * file name, parent class and file directory.
+ * @see https://drupal.org/node/2026959
  */
 class ServiceDemoServiceProvider extends ServiceProviderBase {
 
