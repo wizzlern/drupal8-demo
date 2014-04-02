@@ -1,0 +1,5 @@
+demo_menu.info:
+  title: Menu
+  description: 'Demo menu info'
+  route_name: demo_menu.info
+  menu_name: main
