@@ -29,7 +29,12 @@ class DemoBlock extends BlockBase {
     return array(
       'label' => t('Demo'),
       'content' => t('Default demo content'),
-      'cache' => DRUPAL_CACHE_PER_ROLE,
+      'cache' => array(
+        'max_age' => 3600,
+        'contexts' => array(
+          'cache_context.user.roles',
+        ),
+      ),
     );
   }
 
