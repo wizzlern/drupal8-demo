@@ -7,7 +7,7 @@
 namespace Drupal\demo_config_entity\Form;
 
 use Drupal\Core\Form\FormBase;
-use Drupal\Core\Entity\EntityStorageControllerInterface;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\demo_config_entity\Entity\Webservice;
 use Drupal\Core\Entity\Query\QueryFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -19,11 +19,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AddWebserviceForm extends FormBase {
 
   /**
-   * The webservice storage controller.
+   * The webservice storage.
    *
-   * @var \Drupal\Core\Entity\EntityStorageControllerInterface
+   * @var \Drupal\Core\Entity\EntityStorageInterface
    */
-  protected $storageController;
+  protected $storage;
 
   /**
    * The entity query factory.
@@ -35,13 +35,13 @@ class AddWebserviceForm extends FormBase {
   /**
    * Constructs a new form using dependency injection.
    *
-   * @param \Drupal\Core\Entity\EntityStorageControllerInterface $storage_controller
-   *   The entity storage controller.
+   * @param \Drupal\Core\Entity\EntityStorageInterface $storage
+   *   The entity storage.
    * @param \Drupal\Core\Entity\Query\QueryFactory $query_factory
    *   The query factory.
    */
-  public function __construct(EntityStorageControllerInterface $storage_controller, QueryFactory $entity_query) {
-    $this->storageController = $storage_controller;
+  public function __construct(EntityStorageInterface $storage, QueryFactory $entity_query) {
+    $this->storage = $storage;
     $this->entityQuery = $entity_query;
   }
 
@@ -51,8 +51,8 @@ class AddWebserviceForm extends FormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       // We only care about the Webservice enities in this form, therefore
-      // we directly use and store the right storage controller.
-      $container->get('entity.manager')->getStorageController('demo_config_entity_webservice'),
+      // we directly use and store the right storage.
+      $container->get('entity.manager')->getStorage('demo_config_entity_webservice'),
       $container->get('entity.query')
     );
   }
@@ -149,7 +149,7 @@ class AddWebserviceForm extends FormBase {
    *   TRUE if the action exists, FALSE otherwise.
    */
   public function exists($id) {
-    $action = $this->storageController->load($id);
+    $action = $this->storage->load($id);
     return !empty($action);
   }
 
@@ -159,7 +159,7 @@ class AddWebserviceForm extends FormBase {
    * @return mixed
    */
   protected function getAllWebservices() {
-    return $this->storageController->loadMultiple();
+    return $this->storage->loadMultiple();
   }
 
 }

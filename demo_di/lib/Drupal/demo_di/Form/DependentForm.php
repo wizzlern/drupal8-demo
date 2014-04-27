@@ -83,7 +83,7 @@ class DependentForm extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, array &$form_state) {
-    $user = $this->entityManager->getStorageController('user')->load($form_state['values']['uid']);
+    $user = $this->entityManager->getStorage('user')->load($form_state['values']['uid']);
     if (empty($user)) {
       $this->setFormError('uid', $form_state, t('No user exists with this ID. Please enter a valid user ID.'));
     }
@@ -100,7 +100,7 @@ class DependentForm extends FormBase {
 
     // Get data of the selected user.
     /** @var \Drupal\user\Entity\User $user */
-    $user = $this->entityManager->getStorageController('user')->load($form_state['values']['uid']);
+    $user = $this->entityManager->getStorage('user')->load($form_state['values']['uid']);
     $id = $user->id();
     $name = $user->getUsername();
     $roles = $user->getRoles();

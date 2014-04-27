@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class NodeContent extends ControllerBase {
 
   /**
-   * The webservice storage controller.
+   * The webservice storage.
    *
    * @var \Drupal\Core\Entity\EntityManagerInterface
    */
@@ -32,8 +32,8 @@ class NodeContent extends ControllerBase {
   /**
    * Constructs the controller using dependency injection.
    *
-   * @param \Drupal\Core\Entity\EntityStorageControllerInterface $storage_controller
-   *   The entity storage controller.
+   * @param \Drupal\Core\Entity\EntityStorageInterface $storage
+   *   The entity storage.
    * @param \Drupal\Core\Entity\Query\QueryFactory $query_factory
    *   The query factory.
    */
@@ -48,7 +48,7 @@ class NodeContent extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
     // We only care about the Webservice enities in this form, therefore
-    // we directly use and store the right storage controller.
+    // we directly use and store the right storage.
       $container->get('entity.manager'),
       $container->get('entity.query')
     );
@@ -62,9 +62,9 @@ class NodeContent extends ControllerBase {
    */
   public function oneNode() {
     // Get all nodes and get the data of a random one.;
-    $nodes = $this->entityManager->getStorageController('node')->loadMultiple();
+    $nodes = $this->entityManager->getStorage('node')->loadMultiple();
     /** @var \Drupal\node\Entity\Node $node */
-    $node = $this->entityManager->getStorageController('node')->load(array_rand($nodes));
+    $node = $this->entityManager->getStorage('node')->load(array_rand($nodes));
 
     $output['info'] = array(
       '#markup' => $this->t('This page contains various pieces of content of a random article.'),
@@ -177,7 +177,7 @@ class NodeContent extends ControllerBase {
       ->condition('status', 1)
       ->range(0, 3)
       ->execute();
-    $nodes =  $this->entityManager->getStorageController('node')->loadMultiple($nids);
+    $nodes =  $this->entityManager->getStorage('node')->loadMultiple($nids);
 
     // Build a list of node teasers for output.
     $output['selection'] = array(
@@ -204,7 +204,7 @@ class NodeContent extends ControllerBase {
       ->condition('status', 1)
       ->condition('field_tags.entity.name', 'Boat')
       ->execute();
-    $nodes = $this->entityManager->getStorageController('node')->loadMultiple($nids);
+    $nodes = $this->entityManager->getStorage('node')->loadMultiple($nids);
 
     // Build a list of node teasers for output.
     $output['selection'] = array(
