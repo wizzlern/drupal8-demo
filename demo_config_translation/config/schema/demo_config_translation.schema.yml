@@ -1,0 +1,10 @@
+demo_config_translation.settings:
+  type: mapping
+  label: 'Hello World settings'
+  mapping:
+    case:
+      type: integer
+      label: 'Letter case of your "Hello World!" message'
+    hello_message:
+      type: text
+      label: 'Your "Hello World!" message'

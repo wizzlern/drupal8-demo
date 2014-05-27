@@ -1,0 +1,6 @@
+name: Demo Config Translation
+description: 'Demonstrates how to use Configuration Translation in custom module.'
+package: Demo
+core: 8.x
+type: module
+configure: demo_config_translation.settings_form

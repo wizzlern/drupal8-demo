@@ -1,0 +1,8 @@
+demo_config_translation.admin:
+  title: Demo Config Translation settings
+  description: 'Configure “Hello World” module.'
+  parent: system.admin_config
+  route_name: demo_config_translation.settings_form
+demo_config_translation.hello:
+  title: Hello World Page
+  route_name: demo_config_translation.hello

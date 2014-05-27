@@ -1,0 +1,5 @@
+<?php
+
+/**
+ * Menu links are not displayed properly without .module file.
+ */

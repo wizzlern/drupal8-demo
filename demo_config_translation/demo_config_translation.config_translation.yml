@@ -1,0 +1,5 @@
+demo_config_translation:
+  title: 'Hello World settings'
+  base_route_name: demo_config_translation.settings_form
+  names:
+    - 'demo_config_translation.settings'

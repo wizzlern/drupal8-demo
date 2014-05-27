@@ -1,0 +1,15 @@
+demo_config_translation.hello:
+  path: '/demo/hello'
+  defaults:
+    _title: 'Hello World Page'
+    _content: '\Drupal\demo_config_translation\Controller\HelloController::content'
+  requirements:
+    _permission: 'access content'
+
+demo_config_translation.settings_form:
+  path: '/admin/config/demo_config_translation'
+  defaults:
+    _title: 'Demo Config Translation settings'
+    _form: '\Drupal\demo_config_translation\Form\HelloConfigForm'
+  requirements:
+    _permission: 'administer site configuration'
