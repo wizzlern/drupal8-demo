@@ -40,6 +40,11 @@ class DependentForm extends FormBase {
 
   /**
    * Class constructor.
+   * This custom constructor class "injects" two service objects into this
+   * class. They and are stored in protect properties and used by the code in
+   * this class.
+   *
+   * @see ::create()
    */
   public function __construct(AccountInterface $account, EntityManagerInterface $entity_manager) {
     // Store the services in properties to be used in other methods of this class.
@@ -49,6 +54,13 @@ class DependentForm extends FormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * This implementation of a method of the ContainerInterface instantiates this
+   * form class. In this example the class is instantiated with two services.
+   * Using this method is the way to inject services into a form, or any other
+   * class that implements the DependencyInjection/ContainerInterface.
+   *
+   * @see ::__construct()
    */
   public static function create(ContainerInterface $container) {
     // Instantiate the form object.
