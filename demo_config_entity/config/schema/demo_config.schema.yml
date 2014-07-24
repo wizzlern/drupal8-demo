@@ -1,0 +1,18 @@
+# Schema for the configuration files of the Demo configuration module.
+
+demo_config_entity.webservice.*:
+  type: config_entity
+  label: 'Demo configuration of a webservice'
+  mapping:
+    label:
+      type: label
+      label: 'Label'
+    name:
+      type: string
+      label: 'ID'
+    url:
+      type: string
+      label: 'URL'
+    port:
+      type: label
+      label: 'Port'

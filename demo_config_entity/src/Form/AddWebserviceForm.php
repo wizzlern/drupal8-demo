@@ -69,6 +69,11 @@ class AddWebserviceForm extends FormBase {
    */
   public function buildForm(array $form, array &$form_state) {
 
+    $form['info'] = array(
+      '#markup' => '<p>' . $this->t('Configuration entities are used for data that determines the configuration of your system and is usually maintained by site builders and system administrators. Configuration entities have fields and can therefore store complex data structures.') . '</p>' .
+                   '<p>' . $this->t('In this demo we have defined a "webservice" configuration entity. Each record is one webservice configuration which stores a name, URL and port number for each webservice.') . '</p>',
+    );
+
     // Show all websform entities in a table.
     $entities = $this->getAllWebservices();
     $form['entities'] = array(

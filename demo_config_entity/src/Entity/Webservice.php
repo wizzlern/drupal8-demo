@@ -19,7 +19,6 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *   entity_keys = {
  *     "id" = "name",
  *     "label" = "label",
- *     "uuid" = "uuid"
  *   }
  * )
  */

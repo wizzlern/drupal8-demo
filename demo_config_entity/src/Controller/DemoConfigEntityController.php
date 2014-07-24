@@ -28,7 +28,7 @@ class DemoConfigEntityController extends ControllerBase {
     $output['urls'] = array(
       '#theme' => 'item_list',
       '#items' => array(
-        $this->t('Add and list a simple <em>webservice</em> entity: !uri.', array('!uri' => l('/demo/demo_config_entity/add', 'demo/demo_config_entity/add'))),
+        $this->t('Add and list a simple <em>webservice</em> entity: !uri.', array('!uri' => l('/demo/configuration-entity/add', 'demo/configuration-entity/add'))),
 //        $this->t('List all entities: !uri.', array('!uri' => l('/demo/demo_config_entity/list', 'demo/demo_config_entity/list'))),
       ),
     );
