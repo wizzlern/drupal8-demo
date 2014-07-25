@@ -19,7 +19,8 @@ class InfoController extends ControllerBase {
    *   Render Array of page content.
    */
   public function infoPage() {
-
+    $accounts = \Drupal::entityManager()->getStorage('user')->loadMultiple();
+    debug($accounts);
     $output['info'] = array(
       '#markup' => $this->t('This demonstrates the handling of node data in Drupal 8. The following examples are available:'),
     );

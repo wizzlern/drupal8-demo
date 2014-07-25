@@ -13,14 +13,19 @@ use Drupal\node\Entity\Node;
 function demo_node_install() {
   // Create content with related users and taxonomy terms.
   $users = demo_node_create_users();
-  $terms = demo_node_create_terms();
+  $terms = demo_node_create_terms($users);
   $nodes = demo_node_create_content($users, $terms);
 }
 
 function demo_node_create_users() {
   $uids = array();
 
-  // @todo If users already exist, just return their uid's.
+  // If users already exist, just return their uid's.
+  $accounts = \Drupal::entityManager()->getStorage('user')->loadMultiple();
+  unset($accounts[0]);
+  if (!empty($accounts)) {
+    return (array_keys($accounts));
+  }
 
   $accounts = array(
     array(
@@ -52,7 +57,7 @@ function demo_node_create_users() {
   return $uids;
 }
 
-function demo_node_create_terms() {
+function demo_node_create_terms($users) {
   $tids = array();
 
   // @todo Add requirement check that Terms vocabulary exists.
@@ -64,41 +69,25 @@ function demo_node_create_terms() {
         'name' => 'Fogg',
         'description' => 'A thick cloud of tiny water droplets suspended in the atmosphere at or near the earth\'s surface which obscures or restricts visibility (to a greater extent than mist; strictly, reducing visibility to below 1 km).',
         'vid' => $vid,
-      ),
-      array(
-        'name' => 'Macao',
-        'description' => 'Also spelled Macao, is one of the two Special Administrative Regions of the People\'s Republic of China, the other being Hong Kong',
-        'vid' => $vid,
+        'uid' => array_rand($users),
       ),
       array(
         'name' => 'Sailor',
         'description' => 'A person whose job it is to work as a member of the crew of a commercial or naval ship or boat, especially one who is below the rank of officer.',
         'vid' => $vid,
+        'uid' => array_rand($users),
       ),
       array(
         'name' => 'Boat',
         'description' => 'A small vessel for travelling over water, propelled by oars, sails, or an engine.',
         'vid' => $vid,
-      ),
-      array(
-        'name' => 'Harbour',
-        'description' => 'A place on the coast where ships may moor in shelter, especially one protected from rough water by piers, jetties, and other artificial structures.',
-        'vid' => $vid,
+        'uid' => array_rand($users),
       ),
       array(
         'name' => 'Knots',
         'description' => 'A unit of speed equivalent to one nautical mile per hour, used especially of ships, aircraft, or winds.',
         'vid' => $vid,
-      ),
-      array(
-        'name' => 'Voyage',
-        'description' => 'A long journey involving travel by sea or in space: his voyage to America',
-        'vid' => $vid,
-      ),
-      array(
-        'name' => 'Yokohama',
-        'description' => 'Yokohama is the capital city of Kanagawa Prefecture and the second largest city in Japan by population after Tokyo and most populous municipality of Japan. It lies on Tokyo Bay, south of Tokyo, in the Kantō region of the main island of Honshu. It is a major commercial hub of the Greater Tokyo Area.',
-        'vid' => $vid,
+        'uid' => array_rand($users),
       ),
     );
 
@@ -118,7 +107,6 @@ function demo_node_create_content($users, $terms) {
   $nids = array();
 
   // @todo Add requirement check that Article type exists.
-  // @todo What to do instead of <p>?
   if (entity_load('node_type', 'article')) {
     $articles = array(
       array(
