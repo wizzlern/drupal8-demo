@@ -5,15 +5,67 @@
  * Demonstrates the possibilities of Plugins in Drupal 8.
  */
 
-/**
- * Implements hook_field_formatter_info_alter().
- */
-function demo_plugin_field_formatter_info_alter(array &$info) {
-  // We override the taxonomy term field formatter with our own.
-  if (isset($info['taxonomy_term_reference_link'])) {
-    $info['taxonomy_term_reference_link']['class'] = 'Drupal\\demo_plugin\\Plugin\\Field\\FieldFormatter\\DemoPluginTermLinkFormatter';
-    $info['taxonomy_term_reference_link']['provider'] = 'demo_plugin';
-    $info['taxonomy_term_reference_link']['settings'] = array('limit' => '0');
-  }
+use  Drupal\entity\Entity\EntityViewDisplay;
 
+/**
+ * Implements hook_field_formatter_third_party_settings_form().
+ *
+ * Add a number field to the field formatter settings form. The input value will
+ * automatically be stored in "third party settings".
+ */
+function demo_plugin_field_formatter_third_party_settings_form($plugin, $field_definition, $view_mode, $form, $form_state) {
+  $elements = array();
+
+  if ($plugin->getPluginId() == 'taxonomy_term_reference_link') {
+    $elements['limit'] = array(
+      '#type' => 'number',
+      '#title' => t('Maximum number of terms'),
+      '#default_value' => $plugin->getThirdPartySetting('demo_plugin', 'limit'),
+      '#description' => t('Max number of terms to display. Set to zero for unlimited'),
+    );
+  }
+  return $elements;
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary_alter().
+ *
+ * Append a message to the field display summary showing the configured value.
+ */
+function demo_plugin_field_formatter_settings_summary_alter(&$summary, $context) {
+
+  if ($context['formatter']->getPluginId() == 'taxonomy_term_reference_link') {
+    if ($limit = $context['formatter']->getThirdPartySetting('demo_plugin', 'limit')) {
+      $summary[] = t('Display max !limit terms.', array('!limit' => $limit));
+    }
+    else {
+      $summary[] = t('Display all terms.');
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for field templates.
+ *
+ * Limit the number of taxonomy terms according to the field configuration.
+ */
+function demo_plugin_preprocess_field(&$variables) {
+
+  if ($variables['element']['#formatter'] == 'taxonomy_term_reference_link') {
+    $entity = $variables['element']['#object'];
+    $view_mode = $variables['element']['#view_mode'];
+    $field_name = $variables['element']['#field_name'];
+
+    // Get the field formatter settings.
+    $entity_display = EntityViewDisplay::collectRenderDisplay($entity, $view_mode);
+    $field_display = $entity_display->getComponent($field_name);
+
+    // Limit the number of terms to the configured value.
+    if (isset($field_display['third_party_settings']['demo_plugin']['limit'])) {
+      $limit = $field_display['third_party_settings']['demo_plugin']['limit'];
+      if ($limit) {
+        $variables['items'] = array_slice($variables['items'], 0, $limit);
+      }
+    }
+  }
 }
