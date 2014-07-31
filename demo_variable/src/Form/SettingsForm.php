@@ -63,11 +63,9 @@ class SettingsForm extends ConfigFormBase {
 
     // Add the form values to the configuration.
     $config->set('name', $form_state['values']['name']);
-    $config->set('drupal.versions', array_filter($form_state['values']['versions']));
     $config->set('drupal.skills', array_filter($form_state['values']['skills']));
 
     // Save the configuration.
-    // The variables wil be saved to sites/default/files/config_.../active/demo_variables.settings.yml.
     $config->save();
   }
 }
