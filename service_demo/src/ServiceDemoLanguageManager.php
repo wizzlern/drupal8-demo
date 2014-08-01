@@ -7,12 +7,15 @@
 
 namespace Drupal\service_demo;
 
-use Drupal\Core\Config\ConfigFactory;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Language\Language;
 use Drupal\Core\Language\LanguageDefault;
 use Drupal\language\ConfigurableLanguageManager;
+use Drupal\language\Config\LanguageConfigFactoryOverrideInterface;
 use Drupal\Core\Session\AccountInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+
 
 /**
  * Overrides default LanguageManager to provide configured languages.
@@ -26,10 +29,10 @@ class ServiceDemoLanguageManager extends ConfigurableLanguageManager {
    */
   protected $currentUser;
 
-  public function __construct(LanguageDefault $default_language, ConfigFactory $config_factory, ModuleHandlerInterface $module_handler, AccountInterface $current_user) {
+  public function __construct(LanguageDefault $default_language, ConfigFactoryInterface $config_factory, ModuleHandlerInterface $module_handler, LanguageConfigFactoryOverrideInterface $config_override, RequestStack $requestStack, AccountInterface $current_user) {
     // The override of getCurrentLanguage() uses the 'current_user' service.
     $this->currentUser = $current_user;
-    parent::__construct($default_language, $config_factory, $module_handler);
+    parent::__construct($default_language, $config_factory, $module_handler, $config_override, $requestStack);
   }
 
   /**
