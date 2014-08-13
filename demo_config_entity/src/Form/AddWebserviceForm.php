@@ -7,6 +7,7 @@
 namespace Drupal\demo_config_entity\Form;
 
 use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\demo_config_entity\Entity\Webservice;
 use Drupal\Core\Entity\Query\QueryFactory;
@@ -67,7 +68,7 @@ class AddWebserviceForm extends FormBase {
   /**
    * {@inheritdoc}.
    */
-  public function buildForm(array $form, array &$form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state) {
 
     $form['info'] = array(
       '#markup' => '<p>' . $this->t('Configuration entities are used for data that determines the configuration of your system and is usually maintained by site builders and system administrators. Configuration entities have fields and can therefore store complex data structures.') . '</p>' .
@@ -135,13 +136,13 @@ class AddWebserviceForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, array &$form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state) {
     // Instantiate and save a new Webservice config entity.
     // The constructor needs an array of data, keyed by property name.
-    $webservice = new Webservice($form_state['values'], 'demo_config_entity_webservice');
+    $webservice = new Webservice($form_state->getValues(), 'demo_config_entity_webservice');
     $webservice->save();
 
-    drupal_set_message($this->t('Webform @name was saved.', array('@name' => $form_state['values']['label'])));
+    drupal_set_message($this->t('Webform @name was saved.', array('@name' => $form_state->getValue('label'))));
   }
 
   /**

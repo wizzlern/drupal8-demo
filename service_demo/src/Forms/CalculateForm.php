@@ -7,6 +7,8 @@
 namespace Drupal\service_demo\Form;
 
 use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\FormStateInterface;
+
 
 /**
  * User input form to make calculations.
@@ -23,7 +25,7 @@ class CalculateForm extends FormBase {
   /**
    * {@inheritdoc}.
    */
-  public function buildForm(array $form, array &$form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state) {
     $form['number'] = array(
       '#type' => 'number',
       '#title' => $this->t('A number'),
@@ -44,8 +46,8 @@ class CalculateForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, array &$form_state) {
-    $number = $form_state['values']['number'];
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    $number = $form_state->getValue('number');
     $result = $this->calculateFibonacciNth($number);
     drupal_set_message($this->t('The !number<sup>th</sup> Fibonacci number is !result.', array('!number' => $number, '!result' => $result)));
   }

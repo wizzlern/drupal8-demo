@@ -8,6 +8,7 @@ namespace Drupal\demo_di\Form;
 
 use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\user\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -74,7 +75,7 @@ class DependentForm extends FormBase {
   /**
    * {@inheritdoc}.
    */
-  public function buildForm(array $form, array &$form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state) {
     $form['uid'] = array(
       '#type' => 'number',
       '#title' => $this->t('User ID'),
@@ -94,17 +95,17 @@ class DependentForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, array &$form_state) {
-    $user = $this->entityManager->getStorage('user')->load($form_state['values']['uid']);
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    $user = $this->entityManager->getStorage('user')->load($form_state->getValue('uid'));
     if (empty($user)) {
-      $this->setFormError('uid', $form_state, t('No user exists with this ID. Please enter a valid user ID.'));
+      $form_state->setErrorByName('uid', t('No user exists with this ID. Please enter a valid user ID.'));
     }
   }
 
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, array &$form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state) {
     // Get current user data.
     $id = $this->account->id();
     $name = $this->account->getUsername();
@@ -112,7 +113,7 @@ class DependentForm extends FormBase {
 
     // Get data of the selected user.
     /** @var \Drupal\user\Entity\User $user */
-    $user = $this->entityManager->getStorage('user')->load($form_state['values']['uid']);
+    $user = $this->entityManager->getStorage('user')->load($form_state->getValue('uid'));
     $id = $user->id();
     $name = $user->getUsername();
     $roles = $user->getRoles();

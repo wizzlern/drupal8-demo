@@ -5,10 +5,12 @@
  * Demonstrates the possibilities of forms in Drupal 8.
  */
 
+use Drupal\Core\Form\FormStateInterface;
+
 /**
  * Implements hook_form_alter()
  */
-function demo_form_form_alter(&$form, &$form_state, $form_id) {
+function demo_form_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   drupal_set_message(t('Found a form with ID %form_id', array('%form_id' => $form_id)));
 }
 
@@ -17,7 +19,7 @@ function demo_form_form_alter(&$form, &$form_state, $form_id) {
  *
  * Only alters the Search form 'search_block_form'.
  */
-function demo_form_form_search_block_form_alter(&$form, &$form_state, $form_id) {
+function demo_form_form_search_block_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   $form['hello'] = array(
     '#markup' => t('Go ahead, try me ...') . '<br />',
     '#weight' => -1,

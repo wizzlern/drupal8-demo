@@ -5,7 +5,10 @@
  * Demonstrates the possibilities of Plugins in Drupal 8.
  */
 
-use  Drupal\entity\Entity\EntityViewDisplay;
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\PluginSettingsInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\entity\Entity\EntityViewDisplay;
 
 /**
  * Implements hook_field_formatter_third_party_settings_form().
@@ -13,7 +16,7 @@ use  Drupal\entity\Entity\EntityViewDisplay;
  * Add a number field to the field formatter settings form. The input value will
  * automatically be stored in "third party settings".
  */
-function demo_plugin_field_formatter_third_party_settings_form($plugin, $field_definition, $view_mode, $form, $form_state) {
+function demo_plugin_field_formatter_third_party_settings_form(PluginSettingsInterface $plugin, FieldDefinitionInterface $field_definition, $view_mode, $form, FormStateInterface $form_state) {
   $elements = array();
 
   if ($plugin->getPluginId() == 'taxonomy_term_reference_link') {

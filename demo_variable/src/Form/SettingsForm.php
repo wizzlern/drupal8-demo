@@ -7,6 +7,7 @@
 namespace Drupal\demo_variable\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements an example form.
@@ -23,7 +24,7 @@ class SettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}.
    */
-  public function buildForm(array $form, array &$form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->configFactory->get('demo_variable.settings');
 
     $form['name'] = array(
@@ -58,12 +59,12 @@ class SettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, array &$form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state) {
     $config = $this->configFactory->get('demo_variable.settings');
 
     // Add the form values to the configuration.
-    $config->set('name', $form_state['values']['name']);
-    $config->set('drupal.skills', array_filter($form_state['values']['skills']));
+    $config->set('name', $form_state->getValue('name'));
+    $config->set('drupal.skills', array_filter($form_state->getValue('skills')));
 
     // Save the configuration.
     $config->save();

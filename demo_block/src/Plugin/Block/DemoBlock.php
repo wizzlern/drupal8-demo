@@ -10,6 +10,8 @@ namespace Drupal\demo_block\Plugin\Block;
 use Drupal\block\Annotation\Block;
 use Drupal\block\BlockBase;
 use Drupal\Core\Annotation\Translation;
+use Drupal\Core\Form\FormStateInterface;
+
 
 /**
  * Provides a 'Example: configurable text string' block.
@@ -41,7 +43,7 @@ class DemoBlock extends BlockBase {
   /**
    * Overrides \Drupal\block\BlockBase::blockForm().
    */
-  public function blockForm($form, &$form_state) {
+  public function blockForm($form, FormStateInterface $form_state) {
     $form['content'] = array(
       '#type' => 'textfield',
       '#title' => t('Block contents'),
@@ -55,8 +57,8 @@ class DemoBlock extends BlockBase {
   /**
    * Overrides \Drupal\block\BlockBase::blockSubmit().
    */
-  public function blockSubmit($form, &$form_state) {
-    $this->configuration['content'] = $form_state['values']['content'];
+  public function blockSubmit($form, FormStateInterface $form_state) {
+    $this->configuration['content'] = $form_state->getValue('content');
   }
 
   /**

@@ -7,6 +7,7 @@
 namespace Drupal\demo_event\Form;
 
 use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\demo_event\DemoEvents;
 use Drupal\demo_event\DemoMessageEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -26,7 +27,7 @@ class EventForm extends FormBase {
   /**
    * {@inheritdoc}.
    */
-  public function buildForm(array $form, array &$form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state) {
 
     $form['info'] = array(
       '#markup' => $this->t('This form will trigger an event when the form is submitted. When the event'),
@@ -50,8 +51,8 @@ class EventForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, array &$form_state) {
-    $message = $form_state['values']['message'];
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    $message = $form_state->getValue('message');
 
     // Dispatch a demo event using the message text as content of the event.
     // The listener that is subscribed will create a response message.
