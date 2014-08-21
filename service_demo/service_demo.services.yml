@@ -1,4 +1,4 @@
 services:
   # Defines a custom service.
-  wizzlern_client.rest:
-    class: Drupal\wizzlern_client\RestWebserviceClient
+  fibonacci:
+    class: Drupal\service_demo\Fibonacci
