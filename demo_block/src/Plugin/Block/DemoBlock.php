@@ -7,8 +7,8 @@
 
 namespace Drupal\demo_block\Plugin\Block;
 
-use Drupal\block\Annotation\Block;
-use Drupal\block\BlockBase;
+use Drupal\Core\block\Annotation\Block;
+use Drupal\Core\block\BlockBase;
 use Drupal\Core\Annotation\Translation;
 use Drupal\Core\Form\FormStateInterface;
 
