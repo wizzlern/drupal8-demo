@@ -54,7 +54,7 @@ class DemoEventSubscriber implements EventSubscriberInterface {
     $events[KernelEvents::EXCEPTION][] = array('onKernelEvent');
 
     // Subscribe to Demo broadcast events
-    $events[DemoEvents::BRAODCAST][] = array('onBroadcastEvent');
+    $events[DemoEvents::BROADCAST][] = array('onBroadcastEvent');
 
     return $events;
   }
