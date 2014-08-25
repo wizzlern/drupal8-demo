@@ -7,9 +7,7 @@
 
 namespace Drupal\demo_block\Plugin\Block;
 
-use Drupal\Core\block\Annotation\Block;
 use Drupal\Core\block\BlockBase;
-use Drupal\Core\Annotation\Translation;
 use Drupal\Core\Form\FormStateInterface;
 
 
@@ -25,7 +23,7 @@ use Drupal\Core\Form\FormStateInterface;
 class DemoBlock extends BlockBase {
 
   /**
-   * Overrides \Drupal\block\BlockBase::defaultConfiguration().
+   * Overrides \Drupal\Core\Block\BlockBase::defaultConfiguration().
    */
   public function defaultConfiguration() {
     return array(
@@ -41,7 +39,7 @@ class DemoBlock extends BlockBase {
   }
 
   /**
-   * Overrides \Drupal\block\BlockBase::blockForm().
+   * Overrides \Drupal\Core\Block\BlockBase::blockForm().
    */
   public function blockForm($form, FormStateInterface $form_state) {
     $form['content'] = array(
@@ -55,14 +53,14 @@ class DemoBlock extends BlockBase {
   }
 
   /**
-   * Overrides \Drupal\block\BlockBase::blockSubmit().
+   * Overrides \Drupal\Core\Block\BlockBase::blockSubmit().
    */
   public function blockSubmit($form, FormStateInterface $form_state) {
     $this->configuration['content'] = $form_state->getValue('content');
   }
 
   /**
-   * Implements \Drupal\block\BlockBase::blockBuild().
+   * Implements \Drupal\Core\Block\BlockBase::blockBuild().
    */
   public function build() {
     return array(
