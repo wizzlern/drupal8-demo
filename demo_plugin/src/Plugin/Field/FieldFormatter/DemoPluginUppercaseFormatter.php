@@ -35,7 +35,18 @@ class DemoPluginUppercaseFormatter extends FormatterBase {
     // cache (registry) should be cleared or the content should be re-saved.
     foreach ($items as $delta => $item) {
       /** @var \Drupal\text\Plugin\Field\FieldType\TextItem $item */
-      $elements[$delta] = array('#markup' => Unicode::strtoupper($item->processed));
+
+      // This works on view preview but not on real page.
+      $elements[$delta] = array(
+        '#markup' => Unicode::strtoupper($item->processed)
+      );
+
+      /**
+       * @todo remove this work-around,
+       * @see https://drupal.org/node/2273277
+       */
+      drupal_render($elements[$delta], TRUE);
+
     }
 
     return $elements;
