@@ -7,8 +7,10 @@
 
 namespace Drupal\demo_plugin\Plugin\Field\FieldFormatter;
 
+use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
+
 
 /**
  * Plugin implementation of the 'demo Uppercase' formatter.
@@ -33,7 +35,7 @@ class DemoPluginUppercaseFormatter extends FormatterBase {
     // cache (registry) should be cleared or the content should be re-saved.
     foreach ($items as $delta => $item) {
       /** @var \Drupal\text\Plugin\Field\FieldType\TextItem $item */
-      $elements[$delta] = array('#markup' => drupal_strtoupper($item->processed));
+      $elements[$delta] = array('#markup' => Unicode::strtoupper($item->processed));
     }
 
     return $elements;
