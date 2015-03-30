@@ -7,9 +7,10 @@
 
 namespace Drupal\demo_plugin\Plugin\Field\FieldFormatter;
 
-use Drupal\Component\Utility\Unicode;
+use Drupal\Component\Utility\SafeMarkup;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
+use Drupal\Component\Utility\Unicode;
 
 
 /**
@@ -19,7 +20,11 @@ use Drupal\Core\Field\FormatterBase;
  *   id = "demo_plugin_uppercase",
  *   label = @Translation("Uppercase"),
  *   field_types = {
- *     "text"
+ *     "string",
+ *     "string_long",
+ *   }
+ *   quickedit = {
+ *     "editor" = "plain_text"
  *   }
  * )
  */
@@ -35,18 +40,12 @@ class DemoPluginUppercaseFormatter extends FormatterBase {
     // cache (registry) should be cleared or the content should be re-saved.
     foreach ($items as $delta => $item) {
       /** @var \Drupal\text\Plugin\Field\FieldType\TextItem $item */
-
       // This works on view preview but not on real page.
       $elements[$delta] = array(
         '#markup' => Unicode::strtoupper($item->processed)
       );
-
-      /**
-       * @todo remove this work-around,
-       * @see https://drupal.org/node/2273277
-       */
-      drupal_render($elements[$delta], TRUE);
-
+      
+      $elements[$delta] = array('#markup' => nl2br(Unicode::strtoupper(SafeMarkup::checkPlain($item->value))));
     }
 
     return $elements;

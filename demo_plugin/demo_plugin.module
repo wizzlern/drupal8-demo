@@ -8,7 +8,7 @@
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\PluginSettingsInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\entity\Entity\EntityViewDisplay;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
 
 /**
  * Implements hook_field_formatter_third_party_settings_form().
@@ -19,10 +19,10 @@ use Drupal\entity\Entity\EntityViewDisplay;
 function demo_plugin_field_formatter_third_party_settings_form(PluginSettingsInterface $plugin, FieldDefinitionInterface $field_definition, $view_mode, $form, FormStateInterface $form_state) {
   $elements = array();
 
-  if ($plugin->getPluginId() == 'taxonomy_term_reference_link') {
+  if ($plugin->getPluginId() == 'entity_reference_label') {
     $elements['limit'] = array(
       '#type' => 'number',
-      '#title' => t('Maximum number of terms'),
+      '#title' => t('Maximum number of items'),
       '#default_value' => $plugin->getThirdPartySetting('demo_plugin', 'limit'),
       '#description' => t('Max number of terms to display. Set to zero for unlimited'),
     );
@@ -37,7 +37,7 @@ function demo_plugin_field_formatter_third_party_settings_form(PluginSettingsInt
  */
 function demo_plugin_field_formatter_settings_summary_alter(&$summary, $context) {
 
-  if ($context['formatter']->getPluginId() == 'taxonomy_term_reference_link') {
+  if ($context['formatter']->getPluginId() == 'entity_reference_label') {
     if ($limit = $context['formatter']->getThirdPartySetting('demo_plugin', 'limit')) {
       $summary[] = t('Display max !limit terms.', array('!limit' => $limit));
     }
@@ -54,7 +54,7 @@ function demo_plugin_field_formatter_settings_summary_alter(&$summary, $context)
  */
 function demo_plugin_preprocess_field(&$variables) {
 
-  if ($variables['element']['#formatter'] == 'taxonomy_term_reference_link') {
+  if ($variables['element']['#formatter'] == 'entity_reference_label') {
     $entity = $variables['element']['#object'];
     $view_mode = $variables['element']['#view_mode'];
     $field_name = $variables['element']['#field_name'];
