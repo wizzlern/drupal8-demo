@@ -1,7 +1,7 @@
 demo_event.info:
   path: '/demo/event'
   defaults:
-    _content: '\Drupal\demo_event\Controller\DemoEventController::infoPage'
+    _controller: '\Drupal\demo_event\Controller\DemoEventController::infoPage'
     _title: 'Events'
   requirements:
     _permission: 'access content'
@@ -9,7 +9,7 @@ demo_event.info:
 demo_event.event:
   path: '/demo/event/event'
   defaults:
-    _content: '\Drupal\demo_event\Controller\DemoEventController::eventPage'
+    _controller: '\Drupal\demo_event\Controller\DemoEventController::eventPage'
     _title: 'Fire an event'
   requirements:
     _permission: 'access content'

@@ -8,6 +8,7 @@
 namespace Drupal\demo_config_entity\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Url;
 //use Drupal\demo_config_entity\Entity\Webservice;
 
 /**
@@ -28,8 +29,8 @@ class DemoConfigEntityController extends ControllerBase {
     $output['urls'] = array(
       '#theme' => 'item_list',
       '#items' => array(
-        $this->t('Add and list a simple <em>webservice</em> entity: !uri.', array('!uri' => l('/demo/configuration-entity/add', 'demo/configuration-entity/add'))),
-//        $this->t('List all entities: !uri.', array('!uri' => l('/demo/demo_config_entity/list', 'demo/demo_config_entity/list'))),
+        $this->t('Add and list a simple <em>webservice</em> entity: !uri.', array('!uri' => \Drupal::l('/demo/configuration-entity/add', New Url('demo_config_entity.add')))),
+//        $this->t('List all entities: !uri.', array('!uri' => \Drupal::l('/demo/demo_config_entity/list', New Url('demo_config_entity.list')))),
       ),
     );
 

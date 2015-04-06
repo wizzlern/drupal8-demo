@@ -8,6 +8,7 @@
 namespace Drupal\demo_event\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Url;
 use Drupal\demo_event\DemoEvents;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -30,8 +31,8 @@ class DemoEventController extends ControllerBase {
     $output['urls'] = array(
       '#theme' => 'item_list',
       '#items' => array(
-        $this->t('A page that dispatches an event: !url.', array('!url' => l('/demo/event/event', 'demo/event/event'))),
-        $this->t('A form that broadcasts a message using an event: !url.', array('!url' => l('/demo/event/broadcast', 'demo/event/broadcast'))),
+        $this->t('A page that dispatches an event: !url.', array('!url' => \Drupal::l('/demo/event/event', New Url('demo_event.info')))),
+        $this->t('A form that broadcasts a message using an event: !url.', array('!url' => \Drupal::l('/demo/event/broadcast', New Url('demo_event.broadcast')))),
       ),
     );
     return $output;

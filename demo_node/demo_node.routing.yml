@@ -1,7 +1,7 @@
 demo_node.info:
   path: '/demo/node'
   defaults:
-    _content: '\Drupal\demo_node\Controller\InfoController::infoPage'
+    _controller: '\Drupal\demo_node\Controller\InfoController::infoPage'
     _title: 'Demo node'
   requirements:
     _permission: 'access content'
@@ -9,7 +9,7 @@ demo_node.info:
 demo_node.node:
   path: '/demo/node/one'
   defaults:
-    _content: '\Drupal\demo_node\Controller\NodeContent::oneNode'
+    _controller: '\Drupal\demo_node\Controller\NodeContent::oneNode'
     _title: 'A random article and node data'
   requirements:
     _permission: 'access content'
@@ -17,7 +17,7 @@ demo_node.node:
 demo_node.list:
   path: '/demo/node/list'
   defaults:
-    _content: '\Drupal\demo_node\Controller\NodeContent::nodeSelection'
+    _controller: '\Drupal\demo_node\Controller\NodeContent::nodeSelection'
     _title: '3 published articles'
   requirements:
     _permission: 'access content'
@@ -25,7 +25,7 @@ demo_node.list:
 demo_node.user:
   path: '/demo/node/term'
   defaults:
-    _content: '\Drupal\demo_node\Controller\NodeContent::nodesByTermName'
+    _controller: '\Drupal\demo_node\Controller\NodeContent::nodesByTermName'
     _title: "Articles with term 'Boat'"
   requirements:
     _permission: 'access content'

@@ -2,7 +2,7 @@ service_demo.info:
   path: '/demo/service'
   defaults:
     _title: 'Service'
-    _content: '\Drupal\service_demo\Controller\ServiceDemoController::infoPage'
+    _controller: '\Drupal\service_demo\Controller\ServiceDemoController::infoPage'
   requirements:
     _permission: 'access content'
 
@@ -10,7 +10,7 @@ service_demo.language:
   path: '/demo/service/language'
   defaults:
     _title: 'Current language'
-    _content: '\Drupal\service_demo\Controller\ServiceDemoController::languagePage'
+    _controller: '\Drupal\service_demo\Controller\ServiceDemoController::languagePage'
   requirements:
     _permission: 'access content'
 

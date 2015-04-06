@@ -8,6 +8,7 @@
 namespace Drupal\demo_form\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Url;
 
 /**
  * Returns responses for Demo Form module routes.
@@ -28,7 +29,7 @@ class DemoFormController extends ControllerBase {
     $output['urls'] = array(
       '#theme' => 'item_list',
       '#items' => array(
-        $this->t('A basic form: !url.', array('!url' => l('/demo/form/basic', 'demo/form/basic'))),
+        $this->t('A basic form: !url.', array('!url' => \Drupal::l('/demo/form/basic', New Url('demo_form.basic_form')))),
       ),
     );
 

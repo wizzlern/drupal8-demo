@@ -8,6 +8,7 @@
 namespace Drupal\demo_menu\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Url;
 
 /**
  * Returns responses for Demo Menu module routes.
@@ -28,8 +29,8 @@ class DemoMenuController extends ControllerBase {
     $output['pages'] = array(
       '#theme' => 'item_list',
       '#items' => array(
-        $this->t('Menu page with tab: !url.', array('!url' => l('/demo/menu/one', 'demo/menu/one'))),
-        $this->t('Menu page with action link: !url.', array('!url' => l('/demo/menu/two', 'demo/menu/two'))),
+        $this->t('Menu page with tab: !url.', array('!url' => \Drupal::l('/demo/menu/one', New Url('demo_menu.one')))),
+        $this->t('Menu page with action link: !url.', array('!url' => \Drupal::l('/demo/menu/two', New Url('demo_menu.two')))),
       ),
     );
 

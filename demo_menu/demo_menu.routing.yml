@@ -1,7 +1,7 @@
 demo_menu.info:
   path: '/demo/menu'
   defaults:
-    _content: '\Drupal\demo_menu\Controller\DemoMenuController::infoPage'
+    _controller: '\Drupal\demo_menu\Controller\DemoMenuController::infoPage'
     _title: 'Menus and links'
   requirements:
     _permission: 'access content'
@@ -9,7 +9,7 @@ demo_menu.info:
 demo_menu.one:
   path: '/demo/menu/one'
   defaults:
-    _content: '\Drupal\demo_menu\Controller\DemoMenuController::menuOne'
+    _controller: '\Drupal\demo_menu\Controller\DemoMenuController::menuOne'
     _title: 'Menu One'
   requirements:
     _permission: 'access content'
@@ -17,7 +17,7 @@ demo_menu.one:
 demo_menu.two:
   path: '/demo/menu/two'
   defaults:
-    _content: '\Drupal\demo_menu\Controller\DemoMenuController::menuTwo'
+    _controller: '\Drupal\demo_menu\Controller\DemoMenuController::menuTwo'
     _title: 'Menu Two'
   requirements:
     _permission: 'access content'

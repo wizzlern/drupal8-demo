@@ -8,6 +8,7 @@
 namespace Drupal\demo_di\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Url;
 
 class DemoDIController extends ControllerBase {
 
@@ -25,7 +26,7 @@ class DemoDIController extends ControllerBase {
     $output['urls'] = array(
       '#theme' => 'item_list',
       '#items' => array(
-        $this->t('Show user information: !url.', array('!url' => l('/demo/dependency-injection/user', 'demo/dependency-injection/user'))),
+        $this->t('Show user information: !url.', array('!url' => \Drupal::l('/demo/dependency-injection/user', new Url('demo_di.dependent_form')))),
       ),
     );
 

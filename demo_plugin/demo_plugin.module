@@ -5,6 +5,7 @@
  * Demonstrates the possibilities of Plugins in Drupal 8.
  */
 
+use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\PluginSettingsInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -70,5 +71,19 @@ function demo_plugin_preprocess_field(&$variables) {
         $variables['items'] = array_slice($variables['items'], 0, $limit);
       }
     }
+  }
+}
+
+/**
+ * Implements hook_entity_bundle_field_info_alter().
+ */
+function demo_plugin_entity_bundle_field_info_alter(&$fields, \Drupal\Core\Entity\EntityTypeInterface $entity_type, $bundle) {
+
+  // Add an alternative title to nodes of the 'article' bundle.
+  if ($entity_type->id() == 'node' && $bundle == 'article') {
+    $fields['alternative_title'] = BaseFieldDefinition::create('demo_plugin_title')
+      ->setLabel(t('Alternative title'))
+      ->setComputed(TRUE)
+      ->setClass('\Drupal\demo_plugin\Plugin\Field\FieldFormatter\DemoPluginTitle');
   }
 }

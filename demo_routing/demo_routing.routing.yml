@@ -2,7 +2,7 @@
 demo_routing.info:
   path: '/demo/routing'
   defaults:
-    _content: '\Drupal\demo_routing\Controller\DemoRoutingController::infoPage'
+    _controller: '\Drupal\demo_routing\Controller\DemoRoutingController::infoPage'
     _title: 'Routing'
   requirements:
     _permission: 'access content'
@@ -10,7 +10,7 @@ demo_routing.info:
 demo_routing.hello:
   path: '/demo/routing/hello/{name}'
   defaults:
-    _content: '\Drupal\demo_routing\Controller\DemoRoutingController::helloYouPage'
+    _controller: '\Drupal\demo_routing\Controller\DemoRoutingController::helloYouPage'
     _title: 'Hello'
   requirements:
     _permission: 'access content'
@@ -18,7 +18,7 @@ demo_routing.hello:
 demo_routing.user:
   path: '/demo/routing/user/{user}'
   defaults:
-    _content: '\Drupal\demo_routing\Controller\DemoRoutingController::helloUserPage'
+    _controller: '\Drupal\demo_routing\Controller\DemoRoutingController::helloUserPage'
     _title: 'Hello user'
   requirements:
     _permission: 'access content'

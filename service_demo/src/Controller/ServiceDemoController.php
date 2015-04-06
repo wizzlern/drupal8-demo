@@ -8,6 +8,7 @@
 namespace Drupal\service_demo\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -29,8 +30,8 @@ class ServiceDemoController extends ControllerBase {
     $output['urls'] = array(
       '#theme' => 'item_list',
       '#items' => array(
-        $this->t('Calculate Fibonacci numbers: !url.', array('!url' => l('/demo/service/calculate', 'demo/service/calculate'))),
-        $this->t('Displays the current page language: !url.', array('!url' => l('/demo/service/language', 'demo/service/language'))),
+        $this->t('Calculate Fibonacci numbers: !url.', array('!url' => \Drupal::l('/demo/service/calculate', New Url('service_demo.calculate_form')))),
+        $this->t('Displays the current page language: !url.', array('!url' => \Drupal::l('/demo/service/language', New Url('service_demo.language')))),
       ),
     );
 
@@ -38,10 +39,11 @@ class ServiceDemoController extends ControllerBase {
   }
 
   public function languagePage(Request $request) {
+    /** @var \Drupal\Core\Language\LanguageInterface $language */
     $language = \Drupal::service('language_manager')->getCurrentLanguage();
 
     $output['info'] = array(
-      '#markup' => $this->t('The current language is @language. The language for user/1 is always English.', array('@language' => $language->name)),
+      '#markup' => $this->t('The current language is @language. The language for user/1 is always English.', array('@language' => $language->getName())),
     );
 
     return $output;

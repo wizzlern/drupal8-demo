@@ -9,7 +9,7 @@ namespace Drupal\demo_variable\Controller;
 
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Controller\ControllerBase;
-
+use Drupal\Core\Url;
 
 /**
  * Returns responses for Events Demo module routes.
@@ -30,9 +30,9 @@ class DemoVariableController extends ControllerBase {
     $output['pages'] = array(
       '#theme' => 'item_list',
       '#items' => array(
-        $this->t('Settings: !url.', array('!url' => l('/demo/variable/setting', 'demo/variable/setting'))),
-        $this->t('State: !url.', array('!url' => l('/demo/variable/state', 'demo/variable/state'))),
-        $this->t('Simple configuration: !url.', array('!url' => l('/demo/variable/config', 'demo/variable/config'))),
+        $this->t('Settings: !url.', array('!url' => \Drupal::l('/demo/variable/setting', New Url('demo_variable.setting')))),
+        $this->t('State: !url.', array('!url' => \Drupal::l('/demo/variable/state', New Url('demo_variable.state')))),
+        $this->t('Simple configuration: !url.', array('!url' => \Drupal::l('/demo/variable/config', New Url('demo_variable.config')))),
       ),
     );
 

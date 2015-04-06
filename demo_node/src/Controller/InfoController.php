@@ -8,7 +8,7 @@
 namespace Drupal\demo_node\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-
+use Drupal\Core\Url;
 
 class InfoController extends ControllerBase {
 
@@ -27,9 +27,9 @@ class InfoController extends ControllerBase {
     $output['urls'] = array(
       '#theme' => 'item_list',
       '#items' => array(
-        $this->t('A random article and node data: !uri.', array('!uri' => l('/demo/node/one', 'demo/node/one'))),
-        $this->t('3 published articles: !uri.', array('!uri' => l('/demo/node/list', 'demo/node/list'))),
-        $this->t("Articles with the term 'Boat': !uri.", array('!uri' => l('/demo/node/term', 'demo/node/term'))),
+        $this->t('A random article and node data: !uri.', array('!uri' => \Drupal::l('/demo/menu/one', New Url('demo_node.node')))),
+        $this->t('3 published articles: !uri.', array('!uri' => \Drupal::l('/demo/node/list', New Url('demo_node.list')))),
+        $this->t("Articles with the term 'Boat': !uri.", array('!uri' => \Drupal::l('/demo/node/term', New Url('demo_node.term')))),
       ),
     );
 

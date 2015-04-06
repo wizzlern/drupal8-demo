@@ -2,7 +2,7 @@ demo_form.info:
   path: '/demo/form'
   defaults:
     _title: 'Routing'
-    _content: '\Drupal\demo_form\Controller\DemoFormController::infoPage'
+    _controller: '\Drupal\demo_form\Controller\DemoFormController::infoPage'
   requirements:
     _permission: 'access content'
 

@@ -22,7 +22,7 @@ use Drupal\Component\Utility\Unicode;
  *   field_types = {
  *     "string",
  *     "string_long",
- *   }
+ *   },
  *   quickedit = {
  *     "editor" = "plain_text"
  *   }
