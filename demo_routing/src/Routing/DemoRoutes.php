@@ -23,7 +23,7 @@ class DemoRoutes {
     $routes['demo_routing.today'] = new Route(
       '/demo/routing/day/' . $today,
       array(
-        '_content' => '\Drupal\demo_routing\Controller\DemoRoutingController::today',
+        '_controller' => '\Drupal\demo_routing\Controller\DemoRoutingController::today',
         '_title' => 'Today',
       ),
       array('_permission' => 'access content')
