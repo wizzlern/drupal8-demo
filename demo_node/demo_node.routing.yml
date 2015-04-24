@@ -22,7 +22,7 @@ demo_node.list:
   requirements:
     _permission: 'access content'
 
-demo_node.user:
+demo_node.term:
   path: '/demo/node/term'
   defaults:
     _controller: '\Drupal\demo_node\Controller\NodeContent::nodesByTermName'
