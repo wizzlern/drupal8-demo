@@ -73,17 +73,3 @@ function demo_plugin_preprocess_field(&$variables) {
     }
   }
 }
-
-/**
- * Implements hook_entity_bundle_field_info_alter().
- */
-function demo_plugin_entity_bundle_field_info_alter(&$fields, \Drupal\Core\Entity\EntityTypeInterface $entity_type, $bundle) {
-
-  // Add an alternative title to nodes of the 'article' bundle.
-  if ($entity_type->id() == 'node' && $bundle == 'article') {
-    $fields['alternative_title'] = BaseFieldDefinition::create('demo_plugin_title')
-      ->setLabel(t('Alternative title'))
-      ->setComputed(TRUE)
-      ->setClass('\Drupal\demo_plugin\Plugin\Field\FieldFormatter\DemoPluginTitle');
-  }
-}
