@@ -32,7 +32,7 @@ class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}.
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->configFactory->get('demo_variable.settings');
+    $config = $this->config('demo_variable.settings');
 
     $form['name'] = array(
       '#type' => 'textfield',
@@ -48,8 +48,7 @@ class SettingsForm extends ConfigFormBase {
     );
     $form['skills'] = array(
       '#type' => 'checkboxes',
-      '#title' => $this->t('Drupal skills'),
-      '#description' => $this->t('Your drupal skills.'),
+      '#title' => $this->t('Your drupal skills'),
       '#options' => $options,
       '#default_value' => $config->get('drupal.skills') ? $config->get('drupal.skills') : array(),
     );
@@ -67,7 +66,7 @@ class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $config = $this->configFactory->get('demo_variable.settings');
+    $config = $this->config('demo_variable.settings');
 
     // Add the form values to the configuration.
     $config->set('name', $form_state->getValue('name'));

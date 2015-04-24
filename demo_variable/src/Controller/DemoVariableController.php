@@ -56,6 +56,9 @@ class DemoVariableController extends ControllerBase {
       if (is_bool($value)) {
         $value = $value ? 'TRUE' : 'FALSE';
       }
+      elseif (is_array($value)) {
+        $value = print_r($value, 1);
+      }
 
       $items[] = format_string("\$settings['@name'] = @value", array('@name' => $key, '@value' => $value));
 
