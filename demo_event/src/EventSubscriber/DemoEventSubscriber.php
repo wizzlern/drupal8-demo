@@ -21,12 +21,12 @@ class DemoEventSubscriber implements EventSubscriberInterface {
   /**
    * Logs kernel events.
    *
-   * @param \Symfony\Component\HttpKernel\Event\Event $event
+   * @param \Symfony\Component\EventDispatcher\Event $event
    *   The event to process.
    */
   public function onKernelEvent(Event $event) {
-    drupal_set_message('Kernel events occurred. <a href="/admin/reports/dblog">See the Log for details</a>.');
-    watchdog('demo_event', '!time: Kernel event %event', array('%event' => $event->getName(), '!time' => REQUEST_TIME), WATCHDOG_NOTICE);
+    drupal_set_message(format_string('Kernel events occurred. <a href="!url">See the Log for details</a>.', ['!url' => '/admin/reports/dblog']));
+    \Drupal::logger('demo_event')->notice(format_string('!time: Kernel event %event', array('%event' => $event->getName(), '!time' => REQUEST_TIME)));
   }
 
   /**
@@ -38,7 +38,7 @@ class DemoEventSubscriber implements EventSubscriberInterface {
   public function onBroadcastEvent(DemoMessageEvent $event) {
     drupal_set_message('Demo event occurred: ' . $event->getName());
     drupal_set_message('We have a message for you: ' . $event->getMessage(), 'warning');
-    watchdog('demo_event', 'Message received: @message', array('@message' => $event->getMessage()), WATCHDOG_NOTICE);
+    \Drupal::logger('demo_event')->notice(format_string('Message received: @message', array('@message' => $event->getMessage())));
   }
 
   /**
