@@ -61,63 +61,25 @@ class NodeContent extends ControllerBase {
    *   Render Array of page content.
    */
   public function oneNode() {
-    // Get all nodes and get the data of a random one.;
-    $nodes = $this->entityManager->getStorage('node')->loadMultiple();
+
+    $nids = $this->entityQuery->get('node')
+      ->condition('type', 'article')
+      ->condition('status', 1)
+      ->range(0, 1)
+      ->execute();
     /** @var \Drupal\node\Entity\Node $node */
-    $node = $this->entityManager->getStorage('node')->load(array_rand($nodes));
+    $node = $this->entityManager->getStorage('node')->load(reset($nids));
 
     $output['info'] = array(
-      '#markup' => $this->t('This page contains various pieces of content of a random article.'),
+      '#markup' => $this->t('This page contains various pieces of content of an article.'),
     );
 
     $output['fields'] = array(
       '#type' => 'fieldset',
       '#title' => $this->t('Individual node fields'),
       '#collapsible' => FALSE,
+      '#attributes' => array(),
     );
-    /** @var \Drupal\taxonomy\Plugin\Field\FieldType\TaxonomyTermReferenceItem $term */
-//    $term = $node->field_tags[0];
-//    debug(get_class($term = $node->field_tags[0]));
-//    debug($term->getPossibleValues()); // The possible values in the form; term id's
-//    debug($term->getPossibleOptions()); // The possible human readable values in the form; term names
-    /** @var \Drupal\Core\TypedData\Plugin\DataType\Integer $value */
-//    debug($value = $term->get('target_id'));
-//    debug($value->getValue());
-//    debug($term->entity->tid->value);
-//    dpm($term->target_id);
-//    debug(array_keys($this->entityManager->getFieldDefinitions('node', 'article')));
-//debug($node->title->value);
-//debug($node->type->value);
-//debug($node->status->value);
-//debug($node->changed->value);
-//debug($node->path->value);
-//    foreach ($node as $field) {
-//      debug(get_class($field));
-//    }
-//    foreach ($node as $field) {
-//      /** @var \Drupal\Core\Field\FieldItemList  $field*/
-//      if (strpos('field_', $field->getName())) {
-//        // ...
-//      }
-//    }
-//    /** @var \Drupal\field\Entity\FieldConfig */
-//    debug($node->body->getFieldDefinition()->getPropertyNames());
-//    debug($node->field_tags->getFieldDefinition()->getPropertyNames());
-//    array (
-//      0 => 'value',
-//      1 => 'format',
-//      2 => 'processed',
-//      3 => 'summary',
-//      4 => 'summary_processed',
-//    )
-//    /** @var \Drupal\Core\Field\ConfigFieldItemList $item_list */
-//    $item_list->getConstraints()
-//    /** @var \Drupal\field\Entity\FieldInstanceConfig $config */
-//    $config->getSettings()
-//    debug($node->field_item_list->getSettings()['allowed_values']);
-//    debug($node->field_item_list->getFieldDefinition()->getCardinality());
-
-
 
     $base_fields = array_keys($this->entityManager->getBaseFieldDefinitions('node'));
     $output['fields']['base_fields'] = array(
@@ -156,6 +118,7 @@ class NodeContent extends ControllerBase {
       '#type' => 'fieldset',
       '#title' => $this->t('Node in teaser view'),
       '#collapsible' => FALSE,
+      '#attributes' => array(),
     );
     $output['view']['teaser'] = $this->entityManager->getViewBuilder('node')->view($node, 'teaser');
 
@@ -169,7 +132,6 @@ class NodeContent extends ControllerBase {
    *   Render Array of page content.
    */
   public function nodeSelection() {
-    $nids = array();
 
     // Select the nodes we want to show. i.e. 3 published articles.
     $nids = $this->entityQuery->get('node')
@@ -197,6 +159,8 @@ class NodeContent extends ControllerBase {
    *   Render Array of page content.
    */
   public function nodesByTermName() {
+
+    // @todo Create content if required.
 
     // Select the nodes referencing a term with the name 'Boat'.
     $nids = $this->entityQuery->get('node')
