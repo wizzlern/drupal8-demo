@@ -22,6 +22,13 @@ class SettingsForm extends ConfigFormBase {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  protected function getEditableConfigNames() {
+    return ['demo_variable.settings'];
+  }
+
+  /**
    * {@inheritdoc}.
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
