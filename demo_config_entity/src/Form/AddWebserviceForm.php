@@ -53,7 +53,7 @@ class AddWebserviceForm extends FormBase {
     return new static(
       // We only care about the Webservice enities in this form, therefore
       // we directly use and store the right storage.
-      $container->get('entity.manager')->getStorage('demo_config_entity_webservice'),
+      $container->get('entity_type.manager')->getStorage('demo_config_entity_webservice'),
       $container->get('entity.query')
     );
   }

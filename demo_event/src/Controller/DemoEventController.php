@@ -31,8 +31,8 @@ class DemoEventController extends ControllerBase {
     $output['urls'] = array(
       '#theme' => 'item_list',
       '#items' => array(
-        $this->t('A page that dispatches an event: !url.', array('!url' => \Drupal::l('/demo/event/event', New Url('demo_event.info')))),
-        $this->t('A form that broadcasts a message using an event: !url.', array('!url' => \Drupal::l('/demo/event/broadcast', New Url('demo_event.broadcast')))),
+        $this->t('A page that dispatches an event: @link.', array('@link' => \Drupal::l('/demo/event/event', New Url('demo_event.info')))),
+        $this->t('A form that broadcasts a message using an event: @link.', array('@link' => \Drupal::l('/demo/event/broadcast', New Url('demo_event.broadcast')))),
       ),
     );
     return $output;

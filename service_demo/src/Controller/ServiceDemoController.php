@@ -30,8 +30,8 @@ class ServiceDemoController extends ControllerBase {
     $output['urls'] = array(
       '#theme' => 'item_list',
       '#items' => array(
-        $this->t('Calculate Fibonacci numbers: !url.', array('!url' => \Drupal::l('/demo/service/calculate', New Url('service_demo.calculate_form')))),
-        $this->t('Displays the current page language: !url.', array('!url' => \Drupal::l('/demo/service/language', New Url('service_demo.language')))),
+        $this->t('Calculate Fibonacci numbers: @link.', array('@link' => \Drupal::l('/demo/service/calculate', New Url('service_demo.calculate_form')))),
+        $this->t('Displays the current page language: @link.', array('@link' => \Drupal::l('/demo/service/language', New Url('service_demo.language')))),
       ),
     );
 

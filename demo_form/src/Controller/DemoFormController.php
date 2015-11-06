@@ -29,7 +29,7 @@ class DemoFormController extends ControllerBase {
     $output['urls'] = array(
       '#theme' => 'item_list',
       '#items' => array(
-        $this->t('A basic form: !url.', array('!url' => \Drupal::l('/demo/form/basic', New Url('demo_form.basic_form')))),
+        $this->t('A basic form: @link.', array('@link' => \Drupal::l('/demo/form/basic', New Url('demo_form.basic_form')))),
       ),
     );
 

@@ -49,7 +49,7 @@ class CalculateForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $number = $form_state->getValue('number');
     $result = $this->calculateFibonacciNth($number);
-    drupal_set_message($this->t('The Fibonacci number !number is: !result.', array('!number' => $number, '!result' => $result)));
+    drupal_set_message($this->t('The Fibonacci number @number is: @result.', array('@number' => $number, '@result' => $result)));
   }
 
   protected function calculateFibonacciNth($number) {

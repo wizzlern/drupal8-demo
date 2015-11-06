@@ -30,9 +30,9 @@ class DemoVariableController extends ControllerBase {
     $output['pages'] = array(
       '#theme' => 'item_list',
       '#items' => array(
-        $this->t('Settings: !url.', array('!url' => \Drupal::l('/demo/variable/setting', New Url('demo_variable.setting')))),
-        $this->t('State: !url.', array('!url' => \Drupal::l('/demo/variable/state', New Url('demo_variable.state')))),
-        $this->t('Simple configuration: !url.', array('!url' => \Drupal::l('/demo/variable/config', New Url('demo_variable.config')))),
+        $this->t('Settings: @link.', array('@link' => \Drupal::l('/demo/variable/setting', New Url('demo_variable.setting')))),
+        $this->t('State: @link.', array('@link' => \Drupal::l('/demo/variable/state', New Url('demo_variable.state')))),
+        $this->t('Simple configuration: @link.', array('@link' => \Drupal::l('/demo/variable/config', New Url('demo_variable.config')))),
       ),
     );
 

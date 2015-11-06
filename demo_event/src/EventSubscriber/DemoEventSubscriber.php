@@ -25,8 +25,8 @@ class DemoEventSubscriber implements EventSubscriberInterface {
    *   The event to process.
    */
   public function onKernelEvent(Event $event) {
-    drupal_set_message(format_string('Kernel events occurred. <a href="!url">See the Log for details</a>.', ['!url' => '/admin/reports/dblog']));
-    \Drupal::logger('demo_event')->notice(format_string('!time: Kernel event %event', array('%event' => $event->getName(), '!time' => REQUEST_TIME)));
+    drupal_set_message(format_string('Kernel events occurred. <a href=":url">See the Log for details</a>.', [':url' => '/admin/reports/dblog']));
+    \Drupal::logger('demo_event')->notice(format_string('@time: Kernel event %event', array('%event' => $event->getName(), '@time' => REQUEST_TIME)));
   }
 
   /**

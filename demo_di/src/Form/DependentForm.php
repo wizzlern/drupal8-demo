@@ -68,7 +68,7 @@ class DependentForm extends FormBase {
     return new static(
       // Load the services that are needed to create the form.
       $container->get('current_user'),
-      $container->get('entity.manager')
+      $container->get('entity_type.manager')
     );
   }
 
@@ -109,7 +109,7 @@ class DependentForm extends FormBase {
     // Get current user data.
     $id = $this->account->id();
     $name = $this->account->getUsername();
-    drupal_set_message($this->t('The current user is @name (uid: !id).', array('@name' => $name, '!id' => $id)));
+    drupal_set_message($this->t('The current user is @name (uid: @id).', array('@name' => $name, '@id' => $id)));
 
     // Get data of the selected user.
     /** @var \Drupal\user\Entity\User $user */
@@ -117,7 +117,7 @@ class DependentForm extends FormBase {
     $id = $user->id();
     $name = $user->getUsername();
     $roles = $user->getRoles();
-    drupal_set_message($this->t('User @name (uid: !id) has roles: @roles', array('@name' => $name, '!id' => $id, '@roles' => implode(', ', $roles))));
+    drupal_set_message($this->t('User @name (uid: @id) has roles: @roles', array('@name' => $name, '@id' => $id, '@roles' => implode(', ', $roles))));
   }
 
 }

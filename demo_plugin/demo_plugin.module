@@ -40,7 +40,7 @@ function demo_plugin_field_formatter_settings_summary_alter(&$summary, $context)
 
   if ($context['formatter']->getPluginId() == 'entity_reference_label') {
     if ($limit = $context['formatter']->getThirdPartySetting('demo_plugin', 'limit')) {
-      $summary[] = t('Display max !limit terms.', array('!limit' => $limit));
+      $summary[] = t('Display max @limit terms.', array('@limit' => $limit));
     }
     else {
       $summary[] = t('Display all terms.');

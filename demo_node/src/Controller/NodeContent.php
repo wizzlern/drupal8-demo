@@ -7,8 +7,10 @@
 
 namespace Drupal\demo_node\Controller;
 
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Entity\EntityManagerInterface;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -16,11 +18,18 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class NodeContent extends ControllerBase {
 
   /**
-   * The webservice storage.
+   * The entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityManagerInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $entityManager;
+  protected $entityTypeManager;
+
+  /**
+   * The entity field manager.
+   *
+   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
+   */
+  protected $entityFieldManager;
 
   /**
    * The entity query factory.
@@ -32,13 +41,16 @@ class NodeContent extends ControllerBase {
   /**
    * Constructs the controller using dependency injection.
    *
-   * @param \Drupal\Core\Entity\EntityStorageInterface $storage
-   *   The entity storage.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
+   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
+   *   The entity field manager.
    * @param \Drupal\Core\Entity\Query\QueryFactory $query_factory
    *   The query factory.
    */
-  public function __construct(EntityManagerInterface $entity_manager, QueryFactory $entity_query) {
-    $this->entityManager = $entity_manager;
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, QueryFactory $entity_query) {
+    $this->entityTypeManager = $entity_type_manager;
+    $this->entityFieldManager = $entity_field_manager;
     $this->entityQuery = $entity_query;
   }
 
@@ -49,7 +61,8 @@ class NodeContent extends ControllerBase {
     return new static(
     // We only care about the Webservice enities in this form, therefore
     // we directly use and store the right storage.
-      $container->get('entity.manager'),
+      $container->get('entity_type.manager'),
+      $container->get('entity_field.manager'),
       $container->get('entity.query')
     );
   }
@@ -68,7 +81,7 @@ class NodeContent extends ControllerBase {
       ->range(0, 1)
       ->execute();
     /** @var \Drupal\node\Entity\Node $node */
-    $node = $this->entityManager->getStorage('node')->load(reset($nids));
+    $node = $this->entityTypeManager->getStorage('node')->load(reset($nids));
 
     $output['info'] = array(
       '#markup' => $this->t('This page contains various pieces of content of an article.'),
@@ -81,19 +94,19 @@ class NodeContent extends ControllerBase {
       '#attributes' => array(),
     );
 
-    $base_fields = array_keys($this->entityManager->getBaseFieldDefinitions('node'));
+    $base_fields = array_keys($this->entityFieldManager->getBaseFieldDefinitions('node'));
     $output['fields']['base_fields'] = array(
       '#theme' => 'item_list',
       '#title' => 'Base fields',
       '#items' => array(
-        format_string('All base fields: @value', array('@value' => implode(', ', $base_fields))),
-        format_string('Node ID: @value', array('@value' => $node->id())),
-        format_string('Node type: @value', array('@value' => $node->getType())),
-        format_string('Node title: @value', array('@value' => $node->getTitle())),
-        format_string('Node author ID: @value', array('@value' => $node->getOwnerId())),
-        format_string('Node author name: @value', array('@value' => $node->getOwner()->getUsername())),
+        new FormattableMarkup('All base fields: @value', array('@value' => implode(', ', $base_fields))),
+        new FormattableMarkup('Node ID: @value', array('@value' => $node->id())),
+        new FormattableMarkup('Node type: @value', array('@value' => $node->getType())),
+        new FormattableMarkup('Node title: @value', array('@value' => $node->getTitle())),
+        new FormattableMarkup('Node author ID: @value', array('@value' => $node->getOwnerId())),
+        new FormattableMarkup('Node author name: @value', array('@value' => $node->getOwner()->getUsername())),
         //format_string('First term ID: @value', array('@value' => $node->field_tags[0]->target_id)),
-        format_string('First term ID: @value', array('@value' => $node->field_tags->target_id)),
+        new FormattableMarkup('First tenew FormattableMarkuprm ID: @value', array('@value' => $node->field_tags->target_id)),
       ),
       '#weight' => -2,
     );
@@ -104,11 +117,11 @@ class NodeContent extends ControllerBase {
       '#theme' => 'item_list',
       '#title' => 'Configurable fields',
       '#items' => array(
-        format_string('All configurable fields: @value', array('@value' => implode(', ', $config_fields))),
-        format_string('First term name: @value', array('@value' => $node->field_tags->entity->name->value)),
-        format_string('First term description: @value', array('@value' => $node->field_tags->entity->description->value)),
-        format_string('Body text: @value', array('@value' => $node->body->value)),
-        format_string('Body text format: @value', array('@value' => $node->body->format)),
+        new FormattableMarkup('All configurable fields: @value', array('@value' => implode(', ', $config_fields))),
+        new FormattableMarkup('First term name: @value', array('@value' => $node->field_tags->entity->name->value)),
+        new FormattableMarkup('First term description: @value', array('@value' => $node->field_tags->entity->description->value)),
+        new FormattableMarkup('Body text: @value', array('@value' => $node->body->value)),
+        new FormattableMarkup('Body text format: @value', array('@value' => $node->body->format)),
       ),
       '#weight' => -1,
     );
@@ -120,7 +133,8 @@ class NodeContent extends ControllerBase {
       '#collapsible' => FALSE,
       '#attributes' => array(),
     );
-    $output['view']['teaser'] = $this->entityManager->getViewBuilder('node')->view($node, 'teaser');
+    $output['view']['teaser'] = $this->entityTypeManager->getViewBuilder('node')->view($node, 'teaser');
+    $output['#cache']['max-time'] = 0;
 
     return $output;
   }
@@ -139,14 +153,14 @@ class NodeContent extends ControllerBase {
       ->condition('status', 1)
       ->range(0, 3)
       ->execute();
-    $nodes =  $this->entityManager->getStorage('node')->loadMultiple($nids);
+    $nodes =  $this->entityTypeManager->getStorage('node')->loadMultiple($nids);
 
     // Build a list of node teasers for output.
     $output['selection'] = array(
       '#theme' => 'item_list',
     );
     foreach ($nodes as $node) {
-      $output['selection']['#items'][] = $this->entityManager->getViewBuilder('node')->view($node, 'teaser');
+      $output['selection']['#items'][] = $this->entityTypeManager->getViewBuilder('node')->view($node, 'teaser');
     }
 
     return $output;
@@ -168,14 +182,14 @@ class NodeContent extends ControllerBase {
       ->condition('status', 1)
       ->condition('field_tags.entity.name', 'Boat')
       ->execute();
-    $nodes = $this->entityManager->getStorage('node')->loadMultiple($nids);
+    $nodes = $this->entityTypeManager->getStorage('node')->loadMultiple($nids);
 
     // Build a list of node teasers for output.
     $output['selection'] = array(
       '#theme' => 'item_list',
     );
     foreach ($nodes as $node) {
-      $output['selection']['#items'][] = $this->entityManager->getViewBuilder('node')->view($node, 'teaser');
+      $output['selection']['#items'][] = $this->entityTypeManager->getViewBuilder('node')->view($node, 'teaser');
     }
 
     return $output;

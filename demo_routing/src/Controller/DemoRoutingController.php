@@ -31,11 +31,11 @@ class DemoRoutingController extends ControllerBase {
     $output['urls'] = array(
       '#theme' => 'item_list',
       '#items' => array(
-        $this->t('A static route: !uri (current page).', array('!uri' => \Drupal::l('/demo/routing', new Url('demo_routing.info')))),
-        $this->t('A route with a placeholder: !uri.', array('!uri' => \Drupal::l('/demo/routing/hello/[your name]', New Url('demo_routing.hello', array('name' => 'you'))))),
-        $this->t('A route with a placeholder which is automatically converted to an object: !uri.', array('!uri' => \Drupal::l('demo/routing/user/[user id]', New Url('demo_routing.user', array('user' => 1))))),
-        $this->t('A dynamic route: !uri.', array('!uri' => \Drupal::l("/demo/routing/day/[name of today's weekday]", Url::fromUserInput('/demo/routing/day/' . $today)))),
-        $this->t('An altered route. URI /user/login is now changed to !uri.', array('!uri' => \Drupal::l('/login', Url::fromUserInput('/login')))),
+        $this->t('A static route: @link (current page).', array('@link' => \Drupal::l('/demo/routing', new Url('demo_routing.info')))),
+        $this->t('A route with a placeholder: @link.', array('@link' => \Drupal::l('/demo/routing/hello/[your name]', New Url('demo_routing.hello', array('name' => 'you'))))),
+        $this->t('A route with a placeholder which is automatically converted to an object: @link.', array('@link' => \Drupal::l('demo/routing/user/[user id]', New Url('demo_routing.user', array('user' => 1))))),
+        $this->t('A dynamic route: @link.', array('@link' => \Drupal::l("/demo/routing/day/[name of today's weekday]", Url::fromUserInput('/demo/routing/day/' . $today)))),
+        $this->t('An altered route. URI /user/login is now changed to @link.', array('@link' => \Drupal::l('/login', Url::fromUserInput('/login')))),
         $this->t('An altered route. Access to <a href="/user/logout">/user/logout</a> is always denied.'),
       ),
     );
@@ -65,7 +65,7 @@ class DemoRoutingController extends ControllerBase {
   public function today() {
 
     $output['today'] = array(
-      '#markup' => $this->t("Today it's !day_of_the_week. Yay!", array('!day_of_the_week' => date('l', REQUEST_TIME))),
+      '#markup' => $this->t("Today it's @!day_of_the_week. Yay!", array('@day_of_the_week' => date('l', REQUEST_TIME))),
     );
 
     return $output;

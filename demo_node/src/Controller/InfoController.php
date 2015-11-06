@@ -27,9 +27,9 @@ class InfoController extends ControllerBase {
     $output['urls'] = array(
       '#theme' => 'item_list',
       '#items' => array(
-        $this->t('A random article and node data: !uri.', array('!uri' => \Drupal::l('/demo/menu/one', New Url('demo_node.node')))),
-        $this->t('3 published articles: !uri.', array('!uri' => \Drupal::l('/demo/node/list', New Url('demo_node.list')))),
-        $this->t("Articles with the term 'Boat': !uri.", array('!uri' => \Drupal::l('/demo/node/term', New Url('demo_node.term')))),
+        $this->t('A random article and node data: @link.', array('@link' => \Drupal::l('/demo/menu/one', New Url('demo_node.node')))),
+        $this->t('3 published articles: @link.', array('@link' => \Drupal::l('/demo/node/list', New Url('demo_node.list')))),
+        $this->t("Articles with the term 'Boat': @link.", array('@link' => \Drupal::l('/demo/node/term', New Url('demo_node.term')))),
       ),
     );
 
