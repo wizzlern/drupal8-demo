@@ -1,0 +1,4 @@
+demo_config_translation.settings_form_tab:
+  route_name: demo_config_translation.settings_form
+  title: Settings
+  base_route: demo_config_translation.settings_form
